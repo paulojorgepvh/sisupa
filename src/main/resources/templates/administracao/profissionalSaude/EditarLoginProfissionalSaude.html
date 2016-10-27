@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>UPA-24h</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<h1>Editar login do profissional de saúde</h1>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+
+			<form method="post" class="form-vertical  js-form-loading"
+				th:action="@{/administracao/profissionaisSaude/novo}"
+				th:object="${profissionalSaude}" >
+
+				<div layout:include="mensagens/MensagemGeral"></div>
+				<div layout:include="mensagens/MensagemErro"></div>
+
+				<input type="hidden" th:field="*{id}" />
+				<input type="hidden" th:field="*{nomeCompleto}" />
+				<input type="hidden" th:field="*{cpf}" />
+				<input type="hidden" th:field="*{telefone}" />
+				<input type="hidden" th:field="*{cbos}" />
+				<input type="hidden" th:field="*{ativo}" />
+			
+				
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('login')} ? 'has-error'">
+							<label for="login">Login</label> <input id="login" type="text"
+								class="form-control" th:field="*{login}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('senha')} ? 'has-error'">
+							<label for="senha">Senha</label> <input id="senha" type="password"
+								class="form-control" th:field="*{senha}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-4">
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('perfilDeAcesso')} ? 'has-error'">
+							<label for="perfilDeAcesso">Perfil de acesso</label> 
+							<select class="form-control" name="perfilDeAcesso" th:field="*{perfilDeAcesso}">
+								<option th:each="perfilDeAcesso : ${todosPerfisDeAcesso}" th:value="${perfilDeAcesso}"
+									th:text="${perfilDeAcesso.descricao}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+					<a th:href="@{/administracao/profissionaisSaude/}"
+						class="btn  btn-default">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

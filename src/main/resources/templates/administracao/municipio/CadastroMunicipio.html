@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao"
+	xmlns:upa="http://sisupas.portovelho.com.br">
+
+<head>
+<title>UPA-24h</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<h1>Cadastro de município</h1>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+
+			<form method="POST" class="form-vertical  js-form-loading"
+				th:action="@{/administracao/municipio/novo}" th:object="${municipio}">
+				
+				<upa:message/>
+
+			<!-- 	<th:block layout:include="mensagens/MensagemGeralComVariavel"></th:block>
+				
+				<th:block layout:include="mensagens/MensagemErroValidacao"></th:block> -->
+
+				<input type="hidden" th:field="*{id}" />
+
+				<div class="form-group" upa:classforerror="nome">
+					<label for="nome">Nome*</label> <input id="nome" type="text"
+						class="form-control" th:field="*{nome}" />
+				</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="form-group" upa:classforerror="codigoIbge">
+							<label for="codigoIbge">Código IBGE*</label> <input id="codigoIbge"
+								type="text" class="form-control" th:field="*{codigoIbge}" />
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group" upa:classforerror="uf">
+							<label for="uf">UF*</label> 
+							<select class="form-control" name="uf" th:field="*{uf}">
+								<option value="">Selecione a UF</option>
+								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"
+									th:text="${uf.nome}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+					<a th:href="@{/administracao/municipio/}" class="btn  btn-default">Cancelar</a>
+				</div>
+			</form>
+		</div>
+
+	</section>
+
+</body>
+</html>

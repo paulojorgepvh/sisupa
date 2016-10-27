@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>UPA-24h</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<h1>Cadastro de bairro</h1>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+
+			<form method="post" class="form-vertical  js-form-loading"
+				th:action="@{/administracao/bairro/novo}" th:object="${bairro}">
+
+				<div layout:include="mensagens/MensagemGeral"></div>
+				<div layout:include="mensagens/MensagemErroValidacao"></div>
+
+				<input type="hidden" th:field="*{id}" />
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('nome')} ? 'has-error'">
+					<label for="nome">Nome*</label> <input id="nome" type="text"
+						class="form-control" th:field="*{nome}" />
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="uf">UF*</label> <select class="form-control" name="uf">
+								<option value="">Selecione a UF</option>
+								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"
+									th:text="${uf.nome}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="municipio">Município*</label> <select class="form-control" name="municipio" th:field="*{municipio}">
+								<option value="">Selecione o município</option>
+								<option th:each="municipio : ${todosMunicipios}" th:value="${municipio.id}"
+									th:text="${municipio.nome}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+					<a th:href="@{/administracao/bairro/}" class="btn  btn-default">Cancelar</a>
+				</div>
+			</form>
+		</div>
+
+	</section>
+
+</body>
+</html>

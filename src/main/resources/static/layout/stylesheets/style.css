@@ -1,0 +1,33 @@
+.navbar-brand {
+	padding: 4px 10px;
+}
+
+.tamanho-icone-ativo {
+	font-size: 20px;
+}
+
+.inputFaixaEtaria {
+	margin-right: 4px;
+}
+.inputFaixaEtaria2 {
+	margin-right: 4px;
+	margin-left: 4px;
+}
+.form-inline input.form-control{
+	width: 97px;
+}
+.titulo_panel{
+	font-weight: bold;
+}
+.detalhes-atendimento{
+	margin-bottom: 5px;
+}
+.span-nao-identificado{
+	display: block;
+}
+.logo-upa{
+	padding: 2px;
+}
+.table-profissionais{
+	margin-top: 15px;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>UPA-24h</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div layout:include="mensagens/MensagemGeral"></div>
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de procedimentos internos</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-primary"
+								th:href="@{/administracao/procedimentoInterno/novo}"> <i
+								class="fa  fa-plus-circle"></i> <span
+								class="hidden-xs  hidden-sm">Novo procedimento interno</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="get" class="form-horizontal"
+				th:action="@{/administracao/procedimentoInterno}"
+				th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input class="form-control" th:field="*{descricao}"
+								placeholder="Qual procedimento você está procurando?"
+								autofocus="autofocus"></input> <span class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="row  aw-datatable-toolbar">
+				<div class="col-xs-8">
+					<div class="btn-group">
+						<button type="button"
+							class="btn  btn-default  btn-sm  dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<i
+								class="fa  fa-arrow-circle-down  visible-md-inline  visible-lg-inline"></i>
+							<span>Exportar</span> <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Para arquivo Excel</a></li>
+							<li><a href="#">Para arquivo CSV</a></li>
+							<li><a href="#">Para arquivo XML</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table id="tabela-procedimentoInterno"
+					class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<thead class="aw-table-header-solid">
+						<tr>
+							<th class="text-center col-md-1">Código</th>
+							<th>Descrição</th>
+							<th class="text-center col-md-2">Tipo de Sala</th>
+							<th class="text-center col-md-1">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="procedimento : ${procedimentos}">
+						<td class="text-center" th:text="${procedimento.codigo}"></td>
+							<td><a
+								th:href="@{/administracao/procedimentoInterno/{id}(id=${procedimento.id})}"
+								th:text="${procedimento.descricao}"></a></td>
+								<td class="text-center" th:text="${procedimento.tipoSalaAtendimento.descricao}"></td>
+							<td class="table-pesq-produto-col-estoque"><a
+								class="js-atualizar-status" th:attr="data-id=${procedimento.id}"
+								th:href="@{/administracao/procedimentoInterno/{id}/status(id=${procedimento.id})}">
+									<span class="tamanho-icone-ativo"
+									th:attr="data-role=${procedimento.id}"
+									th:classappend="${procedimento.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
+							</a></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(procedimentos)}">
+							<td colspan="4">Não há procedimentos cadastrados.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

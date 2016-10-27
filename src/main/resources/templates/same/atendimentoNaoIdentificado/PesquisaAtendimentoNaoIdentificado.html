@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>UPA-24h</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+	<div layout:include="mensagens/MensagemGeral"></div>
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de atendimentos não identificados</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-primary"
+								th:href="@{/same/atendimentoNaoIdentificado/novo}"> <i
+								class="fa  fa-plus-circle"></i> <span
+								class="hidden-xs  hidden-sm">Novo atendimento não identificado</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+		<form method="get" class="form-horizontal" th:action="@{/same/atendimentoNaoIdentificado}"
+				th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input class="form-control" th:field="*{descricao}"
+								placeholder="Qual atendimento você esta procurando?"
+								autofocus="autofocus"></input> <span class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="row  aw-datatable-toolbar">
+				<div class="col-xs-8">
+					<div class="btn-group">
+						<button type="button"
+							class="btn  btn-default  btn-sm  dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<i
+								class="fa  fa-arrow-circle-down  visible-md-inline  visible-lg-inline"></i>
+							<span>Exportar</span> <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Para arquivo Excel</a></li>
+							<li><a href="#">Para arquivo CSV</a></li>
+							<li><a href="#">Para arquivo XML</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table id="tabela-produtos"
+					class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<thead class="aw-table-header-solid">
+						<tr>
+						<th class="text-center col-md-1">Senha</th>
+						<th class="text-center col-md-1">Faixa Etária</th>
+						<th class="text-center col-md-1">Identificação</th>
+						<th class="text-center col-md-1">Muncípio</th>
+						<th class="text-center col-md-1">Status</th>
+						<th class="text-center col-md-1">#</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="atendimentoNaoIdentificado : ${atendimentosNaoIdentificados}">
+							<td class="text-center"><a th:href="@{/same/atendimentoNaoIdentificado/{id}(id=${atendimentoNaoIdentificado.id})}" th:text="${atendimentoNaoIdentificado.senha}"></a></td>
+							<td class="text-center" th:text="${atendimentoNaoIdentificado.faixaEtariaInicial +' de '+ atendimentoNaoIdentificado.faixaEtariaFinal +' '+ atendimentoNaoIdentificado.tipoIdade.descricao}"></td>
+							<td class="text-center">
+							<div class="col-md-4">
+								<ul>
+									<li th:text="${atendimentoNaoIdentificado.estrutura.descricao}"></li>
+									<li th:text="${atendimentoNaoIdentificado.porteFisico.descricao}"></li>
+								</ul>
+							</div>
+								<div class="col-md-4">
+								<ul>
+									<li th:text="${atendimentoNaoIdentificado.raca.descricao}"></li>
+									<li th:text="${atendimentoNaoIdentificado.sexo.descricao}"></li>
+								</ul>
+							</div>
+							</td>
+							<td class="text-center" th:text="${atendimentoNaoIdentificado.municipio.nome}"></td>
+							<td class="text-center" th:text="${atendimentoNaoIdentificado.statusAtendimento.descricao}"></td>
+							<td></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(atendimentosNaoIdentificados)}">
+							<td colspan="5">Não há atendimentos não identificados cadastrados.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

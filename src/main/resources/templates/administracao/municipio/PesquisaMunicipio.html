@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>UPA-24h</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div layout:include="mensagens/MensagemGeral"></div>
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de Municípios</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-primary"
+								th:href="@{/administracao/municipio/novo}"> <i
+								class="fa  fa-plus-circle"></i> <span
+								class="hidden-xs  hidden-sm">Novo municipio</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="get" class="form-horizontal"
+				th:action="@{/administracao/municipio}" th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input class="form-control" th:field="*{nome}"
+								placeholder="Qual município você esta procurando?"
+								autofocus="autofocus"></input> <span class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="row  aw-datatable-toolbar">
+				<div class="col-xs-8">
+					<div class="btn-group">
+						<button type="button"
+							class="btn  btn-default  btn-sm  dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<i
+								class="fa  fa-arrow-circle-down  visible-md-inline  visible-lg-inline"></i>
+							<span>Exportar</span> <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Para arquivo Excel</a></li>
+							<li><a href="#">Para arquivo CSV</a></li>
+							<li><a href="#">Para arquivo XML</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table id="tabela-produtos"
+					class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<thead class="aw-table-header-solid">
+						<tr>
+							<th class="text-center col-md-1">Código IBGE</th>
+							<th >Município</th>
+							<th class="text-center col-md-2">UF</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="municipio : ${municipios}">
+							<td class="text-center" ><a
+								th:href="@{/administracao/municipio/{id}(id=${municipio.id})}"
+								th:text="${municipio.codigoIbge}"></a></td>
+							<td th:text="${municipio.nome}"></td>
+							<td class="text-center" th:text="${municipio.uf.nome}"></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(municipios)}">
+							<td colspan="4">Não há municípios cadastrados.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
