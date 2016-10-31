@@ -1,6 +1,5 @@
 package br.com.portovelho.sisupas.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.portovelho.sisupas.model.Municipio;
 import br.com.portovelho.sisupas.repository.MunicipiosRepository;
-import br.com.portovelho.sisupas.repository.filter.MunicipioFiltro;
 import br.com.portovelho.sisupas.service.exception.NomeMunicipioJaCadastradoException;
 
 @Service
@@ -18,10 +16,11 @@ public class CadastroMunicipioService {
 	@Autowired
 	private MunicipiosRepository municipioRepository;
 
-	public List<Municipio> filtrar(MunicipioFiltro filtro) {
+	/*public List<Municipio> filtrar(MunicipioFiltro filtro) {
 		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		return municipioRepository.findByNomeContainingOrderByNomeAsc(nome.toUpperCase());
-	}
+		return municipioRepository.filtrar(nome);  
+		//findByNomeContainingOrderByNomeAsc(nome.toUpperCase());
+	}*/
 	
 	@Transactional
 	public void salvar(Municipio municipio) {

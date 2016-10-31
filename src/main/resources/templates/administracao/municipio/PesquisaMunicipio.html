@@ -2,7 +2,8 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	layout:decorator="layout/LayoutPadrao"
+	xmlns:upa="http://sisupas.portovelho.org.com.br">
 
 <head>
 <title>UPA-24h</title>
@@ -32,8 +33,7 @@
 		</div>
 
 		<div class="container-fluid">
-			<form method="get" class="form-horizontal"
-				th:action="@{/administracao/municipio}" th:object="${filtro}">
+			<form method="get" class="form-horizontal" th:object="${filtro}">
 				<div class="form-group">
 					<div class="col-sm-8">
 						<div class="input-group">
@@ -73,24 +73,45 @@
 					<thead class="aw-table-header-solid">
 						<tr>
 							<th class="text-center col-md-1">Código IBGE</th>
-							<th >Município</th>
+							<th>
+								<upa:ordenacao page="${pagina}" field="nome" text="Município"/>
+							</th>
 							<th class="text-center col-md-2">UF</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="municipio : ${municipios}">
+						<tr th:each="municipio : ${pagina.conteudo}">
 							<td class="text-center" ><a
 								th:href="@{/administracao/municipio/{id}(id=${municipio.id})}"
 								th:text="${municipio.codigoIbge}"></a></td>
 							<td th:text="${municipio.nome}"></td>
 							<td class="text-center" th:text="${municipio.uf.nome}"></td>
 						</tr>
-						<tr th:if="${#lists.isEmpty(municipios)}">
+						<tr th:if="${pagina.vazia}">
 							<td colspan="4">Não há municípios cadastrados.</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			
+			<div class="col-sm-12 text-center" th:if="${not pagina.vazia}">
+				<nav>
+					<ul class="pagination pagination-sm">
+						<li th:class="${pagina.primeira} ? disabled">
+							<a th:href="${pagina.urlParaPagina(pagina.atual-1)}" th:remove="${pagina.primeira} ? tag"><span>&laquo;</span></a>
+						</li>
+						<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPaginas)}" th:with="numeroPagina=${p-1}">
+							<li th:class="${pagina.atual == numeroPagina} ? active">
+								<a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+							</li>
+						</th:block>
+						<li th:class="${pagina.ultima} ? disabled">
+							<a th:href="${pagina.urlParaPagina(pagina.atual+1)}" th:remove="${pagina.ultima} ? tag"><span>&raquo;</span></a>
+						</li>					
+					</ul>
+				</nav>
+			</div>
+			
 		</div>
 	</section>
 </body>

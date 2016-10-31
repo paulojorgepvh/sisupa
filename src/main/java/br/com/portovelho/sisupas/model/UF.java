@@ -1,13 +1,11 @@
 package br.com.portovelho.sisupas.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 
 @Entity
@@ -20,8 +18,8 @@ public class UF implements Serializable{
 	private Long codigoIbge;
 	private String nome;
 	private String abreviacao;
-	@OneToMany(mappedBy = "uf")
-	private List<Municipio> municipios;
+/*	@OneToMany(mappedBy = "uf")
+	private List<Municipio> municipios;*/
 
 	public String getNome() {
 		return nome;
@@ -37,14 +35,6 @@ public class UF implements Serializable{
 
 	public void setAbreviacao(String abreviacao) {
 		this.abreviacao = abreviacao;
-	}
-
-	public List<Municipio> getMunicipios() {
-		return municipios;
-	}
-
-	public void setMunicipios(List<Municipio> municipios) {
-		this.municipios = municipios;
 	}
 
 	public Long getCodigoIbge() {

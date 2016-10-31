@@ -1,10 +1,15 @@
 package br.com.portovelho.sisupas.controller.administracao;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.portovelho.sisupas.controller.page.PageWrapper;
 import br.com.portovelho.sisupas.model.Bairro;
+import br.com.portovelho.sisupas.repository.BairrosRepository;
 import br.com.portovelho.sisupas.repository.MunicipiosRepository;
 import br.com.portovelho.sisupas.repository.UfsRepository;
 import br.com.portovelho.sisupas.repository.filter.BairroFiltro;
@@ -34,6 +41,9 @@ public class BairrosController {
 	
 	@Autowired
 	private UfsRepository ufsRepository;
+	
+	@Autowired
+	private BairrosRepository bairrosRepository;
 
 	/*
 	 * @ModelAttribute("todosUfs") public List<UF> todosUfs() { return
@@ -49,6 +59,17 @@ public class BairrosController {
 	public ModelAndView listaBairro(@ModelAttribute("filtro") BairroFiltro filtro) {
 		ModelAndView mv = new ModelAndView(BAIRRO_PESQUISA_VIEW);
 		mv.addObject("bairros", bairroService.filtrar(filtro));
+		return mv;
+	}
+	
+	@GetMapping
+	public ModelAndView listaBairro(@ModelAttribute("filtro") BairroFiltro filtro,
+			@PageableDefault(size = 20) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView(BAIRRO_PESQUISA_VIEW);
+		
+		PageWrapper<Bairro> paginaWrapper = new PageWrapper<>(bairrosRepository.filtrar(filtro, pageable), httpServletRequest);
+		
+		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
 

@@ -1,8 +1,11 @@
 package br.com.portovelho.sisupas.controller.administracao;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.portovelho.sisupas.controller.page.PageWrapper;
 import br.com.portovelho.sisupas.model.Municipio;
+import br.com.portovelho.sisupas.repository.MunicipiosRepository;
 import br.com.portovelho.sisupas.repository.UfsRepository;
 import br.com.portovelho.sisupas.repository.filter.MunicipioFiltro;
 import br.com.portovelho.sisupas.service.CadastroMunicipioService;
@@ -31,19 +36,26 @@ public class MunicipiosController {
 	private UfsRepository ufsRepository;
 
 	@Autowired
+	private MunicipiosRepository municipiosRepository;
+
+	@Autowired
 	private CadastroMunicipioService cadastroMunicipioService;
 
 	@GetMapping
-	public ModelAndView listaBairro(@ModelAttribute("filtro") MunicipioFiltro filtro) {
+	public ModelAndView listaMunicipios(@ModelAttribute("filtro") MunicipioFiltro filtro,
+			@PageableDefault(size = 20) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView(MUNICIPIO_PESQUISA_VIEW);
-		mv.addObject("municipios", cadastroMunicipioService.filtrar(filtro));
+		
+		PageWrapper<Municipio> paginaWrapper = new PageWrapper<>(municipiosRepository.filtrar(filtro, pageable), httpServletRequest);
+		
+		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
 
 	@RequestMapping("/novo")
 	public ModelAndView novoMunicipio(Municipio municipio) {
 		ModelAndView mv = new ModelAndView(MUNICIPIO_CAD_VIEW);
-		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome());
+		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome()); 
 		return mv;
 	}
 
