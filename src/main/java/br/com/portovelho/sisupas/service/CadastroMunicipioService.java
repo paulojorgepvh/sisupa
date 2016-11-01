@@ -16,12 +16,6 @@ public class CadastroMunicipioService {
 	@Autowired
 	private MunicipiosRepository municipioRepository;
 
-	/*public List<Municipio> filtrar(MunicipioFiltro filtro) {
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
-		return municipioRepository.filtrar(nome);  
-		//findByNomeContainingOrderByNomeAsc(nome.toUpperCase());
-	}*/
-	
 	@Transactional
 	public void salvar(Municipio municipio) {
 		Optional<Municipio> municipioOptional = municipioRepository.findByNomeIgnoreCaseAndUf(municipio.getNome(), municipio.getUf());
@@ -31,18 +25,4 @@ public class CadastroMunicipioService {
 		
 		municipioRepository.save(municipio);
 	}
-
-	/*public MensagemDeErro salvar(Municipio municipio) {
-		MensagemDeErro mensagem = new MensagemDeErro();
-		Municipio municipioRecuperado = municipioRepository.findByNome(municipio.getNome());
-		if (municipioRecuperado != null) {
-			mensagem.setMensagem("Já existe um município com esse nome nessa UF !");
-			mensagem.setErro(true);
-		} else {
-			municipioRepository.save(municipio);
-			mensagem.setMensagem("Município salvo com sucesso!");
-			mensagem.setErro(false);
-		}
-		return mensagem;
-	}*/
 }

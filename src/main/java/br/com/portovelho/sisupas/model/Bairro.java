@@ -3,6 +3,7 @@ package br.com.portovelho.sisupas.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(uniqueConstraints={
@@ -31,9 +34,10 @@ public class Bairro implements Serializable{
 	@NotBlank(message = "O campo nome é obrigatório!")
 	private String nome;
 
-	@ManyToOne
-	@JoinColumn(name = "municipio_id")
 	@NotNull(message = "O campo município é obrigatório!")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "municipio_id")
+	@JsonIgnore
 	private Municipio municipio;
 
 	private Boolean status;

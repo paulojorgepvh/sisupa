@@ -21,8 +21,8 @@
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-primary"
-								th:href="@{/administracao/municipio/novo}"> <i
+							<a class="btn btn-success"
+								th:href="@{/administracao/municipios/novo}"> <i
 								class="fa  fa-plus-circle"></i> <span
 								class="hidden-xs  hidden-sm">Novo municipio</span>
 							</a>
@@ -40,7 +40,7 @@
 							<input class="form-control" th:field="*{nome}"
 								placeholder="Qual município você esta procurando?"
 								autofocus="autofocus"></input> <span class="input-group-btn">
-								<button type="submit" class="btn btn-default">
+								<button type="submit" class="btn btn-success">
 									<i class="glyphicon glyphicon-search"></i>
 								</button>
 							</span>
@@ -49,22 +49,7 @@
 				</div>
 			</form>
 			<div class="row  aw-datatable-toolbar">
-				<div class="col-xs-8">
-					<div class="btn-group">
-						<button type="button"
-							class="btn  btn-default  btn-sm  dropdown-toggle"
-							data-toggle="dropdown" aria-expanded="false">
-							<i
-								class="fa  fa-arrow-circle-down  visible-md-inline  visible-lg-inline"></i>
-							<span>Exportar</span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Para arquivo Excel</a></li>
-							<li><a href="#">Para arquivo CSV</a></li>
-							<li><a href="#">Para arquivo XML</a></li>
-						</ul>
-					</div>
-				</div>
+				
 			</div>
 
 			<div class="table-responsive">
@@ -94,23 +79,8 @@
 				</table>
 			</div>
 			
-			<div class="col-sm-12 text-center" th:if="${not pagina.vazia}">
-				<nav>
-					<ul class="pagination pagination-sm">
-						<li th:class="${pagina.primeira} ? disabled">
-							<a th:href="${pagina.urlParaPagina(pagina.atual-1)}" th:remove="${pagina.primeira} ? tag"><span>&laquo;</span></a>
-						</li>
-						<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPaginas)}" th:with="numeroPagina=${p-1}">
-							<li th:class="${pagina.atual == numeroPagina} ? active">
-								<a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
-							</li>
-						</th:block>
-						<li th:class="${pagina.ultima} ? disabled">
-							<a th:href="${pagina.urlParaPagina(pagina.atual+1)}" th:remove="${pagina.ultima} ? tag"><span>&raquo;</span></a>
-						</li>					
-					</ul>
-				</nav>
-			</div>
+			
+			<upa:paginacao page="${pagina}"/>
 			
 		</div>
 	</section>

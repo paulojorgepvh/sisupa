@@ -2,7 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao"
+	layout:decorator="~{layout/LayoutPadrao}"
 	xmlns:upa="http://sisupas.portovelho.org.com.br">
 
 <head>
@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 
 			<form method="POST" class="form-vertical  js-form-loading"
-				th:action="@{/administracao/municipio/novo}" th:object="${municipio}">
+				th:action="@{/administracao/municipios/novo}" th:object="${municipio}">
 				
 				<upa:message/>
 
@@ -54,8 +54,8 @@
 				</div>
 
 				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
-					<a th:href="@{/administracao/municipio/}" class="btn  btn-default">Cancelar</a>
+					<button class="btn  btn-success" type="submit">Salvar</button>
+					<a th:href="@{/administracao/municipios/}" class="btn  btn-danger">Cancelar</a>
 				</div>
 			</form>
 		</div>

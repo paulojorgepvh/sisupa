@@ -17,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Municipio implements Serializable {
 
@@ -31,9 +33,10 @@ public class Municipio implements Serializable {
 	@NotBlank(message = "O campo nome é obrigatório!")
 	private String nome;
 	
+	@NotNull(message = "O campo UF é obrigatório!")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uf_id")
-	@NotNull(message = "O campo UF é obrigatório!")
+	@JsonIgnore
 	private UF uf;
 	
 	@OneToMany(mappedBy = "municipio")
@@ -85,7 +88,7 @@ public class Municipio implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigoIbge == null) ? 0 : codigoIbge.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -98,10 +101,10 @@ public class Municipio implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Municipio other = (Municipio) obj;
-		if (codigoIbge == null) {
-			if (other.codigoIbge != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!codigoIbge.equals(other.codigoIbge))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

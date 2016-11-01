@@ -1,4 +1,4 @@
-package br.com.portovelho.sisupas.repository.helper.bairro;
+package br.com.portovelho.sisupas.repository.helper.cbo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,23 +15,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import br.com.portovelho.sisupas.model.Bairro;
-import br.com.portovelho.sisupas.repository.filter.BairroFiltro;
+import br.com.portovelho.sisupas.model.CBO;
+import br.com.portovelho.sisupas.repository.filter.CboFiltro;
 import br.com.portovelho.sisupas.repository.paginacao.PaginacaoUtil;
 
-public class BairrosRepositoryImpl implements BairrosRepositoryQueries {
+public class CbosRepositoryImpl implements CbosRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
-
+	
 	@Autowired
 	private PaginacaoUtil paginacaoUtil;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Bairro> filtrar(BairroFiltro filtro, Pageable pageable) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Bairro.class);
+	public Page<CBO> filtrar(CboFiltro filtro, Pageable pageable) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(CBO.class);
 
 		paginacaoUtil.preparar(criteria, pageable);
 
@@ -40,21 +40,16 @@ public class BairrosRepositoryImpl implements BairrosRepositoryQueries {
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
 
-	private void adicionarFiltro(BairroFiltro filtro, Criteria criteria) {
+	private void adicionarFiltro(CboFiltro filtro, Criteria criteria) {
 		if (filtro != null) {
-			if (!StringUtils.isEmpty(filtro.getNome())) {
-				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-			}
-			if (filtro.getMunicipio() != null) {
-				if (filtro.getMunicipio().getNome() != null) {
-					criteria.add(Restrictions.eq("municipio", filtro.getMunicipio()));
-				}
+			if (!StringUtils.isEmpty(filtro.getDescricao())) {
+				criteria.add(Restrictions.ilike("nome", filtro.getDescricao(), MatchMode.ANYWHERE));
 			}
 		}
 	}
 
-	private Long total(BairroFiltro filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Bairro.class);
+	private Long total(CboFiltro filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(CBO.class);
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();

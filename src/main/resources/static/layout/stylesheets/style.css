@@ -9,25 +9,40 @@
 .inputFaixaEtaria {
 	margin-right: 4px;
 }
+
 .inputFaixaEtaria2 {
 	margin-right: 4px;
 	margin-left: 4px;
 }
-.form-inline input.form-control{
+
+.form-inline input.form-control {
 	width: 97px;
 }
-.titulo_panel{
+
+.titulo_panel {
 	font-weight: bold;
 }
-.detalhes-atendimento{
+
+.detalhes-atendimento {
 	margin-bottom: 5px;
 }
-.span-nao-identificado{
+
+.span-nao-identificado {
 	display: block;
 }
-.logo-upa{
+
+.logo-upa {
 	padding: 2px;
 }
-.table-profissionais{
+
+.table-profissionais {
 	margin-top: 15px;
+}
+
+.upa-field-action {
+	display: flex;
+}
+
+.upa-field-action__icon {
+	margin: 6px 0 0 5px;
 }

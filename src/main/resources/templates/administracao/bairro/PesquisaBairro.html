@@ -2,8 +2,9 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao"
-	xmlns:upa="http://sisupas.portovelho.org.com.br">
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:upa="http://sisupas.portovelho.org.com.br"
+	layout:decorator="~{layout/LayoutPadrao}">
 
 <head>
 <title>UPA-24h</title>
@@ -21,8 +22,8 @@
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-primary"
-								th:href="@{/administracao/bairro/novo}"> <i
+							<a class="btn btn-success"
+								th:href="@{/administracao/bairros/novo}"> <i
 								class="fa  fa-plus-circle"></i> <span
 								class="hidden-xs  hidden-sm">Novo bairro</span>
 							</a>
@@ -33,24 +34,43 @@
 		</div>
 
 		<div class="container-fluid">
-			<form method="get" class="form-horizontal"
-				th:action="@{/administracao/bairro}" th:object="${filtro}">
-				<div class="form-group">
-					<div class="col-sm-8">
-						<div class="input-group">
-							<input class="form-control" th:field="*{nome}"
-								placeholder="Qual bairro você esta procurando?"
-								autofocus="autofocus"></input> <span class="input-group-btn">
-								<button type="submit" class="btn btn-default">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
+			<form method="GET" th:object="${filtro}">
+				<div class="row">
+				
+					<div class="form-group col-sm-5">
+						<label class="control-label" for="nome">Nome*</label> 
+						<input id="nome" type="text" class="form-control" autofocus="autofocus" th:field="*{nome}"/>
+					</div>
+				<!-- </div>	
+				<div class="row"> -->
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="uf">UF*</label> 
+							<select id="uf" class="form-control" name="uf" th:field="*{municipio.uf}">
+								<option value="">Selecione a UF</option>
+								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"
+									th:text="${uf.nome}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label" for="municipio">Município*</label> 
+							<div class="upa-field-action">
+								<select id="municipio" class="form-control" name="municipio" th:field="*{municipio}" data:url="@{/administracao/municipios}">
+								</select>
+								
+								<div class="upa-field-action__icon js-img-loading" style="display: none">
+									<img th:src="@{/layout/images/mini-loading.gif}"/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</form>
-			<div class="row  aw-datatable-toolbar">
-				<div class="col-xs-8">
+			<button type="submit" class="btn  btn-success">Pesquisar</button>
+		</form>
+			 <div class="row  aw-datatable-toolbar">
+			<!--<div class="col-xs-8">
 					<div class="btn-group">
 						<button type="button"
 							class="btn  btn-default  btn-sm  dropdown-toggle"
@@ -65,8 +85,8 @@
 							<li><a href="#">Para arquivo XML</a></li>
 						</ul>
 					</div>
-				</div>
-			</div>
+				</div>-->
+			</div> 
 
 			<div class="table-responsive">
 				<table id="tabela-produtos"
@@ -76,33 +96,37 @@
 							<th>
 								<upa:ordenacao page="${pagina}" field="nome" text="Bairro"/>
 							</th>
-							<th class="text-center col-md-2">Município</th>
+							<th class="text-center col-md-2">
+								<upa:ordenacao page="${pagina}" field="municipio" text="Município"/>
+							</th>
 							<th class="text-center col-md-2">UF</th>
 							<th class="text-center col-md-1">Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="bairro : ${pagina}">
+						<tr th:each="bairro : ${pagina.conteudo}">
 							<td><a
-								th:href="@{/administracao/bairro/{id}(id=${bairro.id})}"
+								th:href="@{/administracao/bairros/{id}(id=${bairro.id})}"
 								th:text="${bairro.nome}"></a></td>
 							<td class="text-center" th:text="${bairro.municipio.nome}"></td>
 							<td class="text-center" th:text="${bairro.municipio.uf.nome}"></td>
-							<td class="table-pesq-produto-col-estoque"><a
-								class="js-atualizar-status" th:attr="data-id=${bairro.id}"
-								th:href="@{/administracao/bairro/{id}/status(id=${bairro.id})}">
-									<span class="tamanho-icone-ativo"
-									th:attr="data-role=${bairro.id}"
-									th:classappend="${bairro.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
-							</a></td>
+							<td class="table-pesq-produto-col-estoque">
+								<a class="js-atualizar-status" th:attr="data-id=${bairro.id}" th:href="@{/administracao/bairros/{id}/status(id=${bairro.id})}">
+									<span class="tamanho-icone-ativo" th:attr="data-role=${bairro.id}" th:classappend="${bairro.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
+								</a>
+							</td>
 						</tr>
-						<tr th:if="${#lists.isEmpty(pagina)}">
+						<tr th:if="${pagina.vazia}">
 							<td colspan="4">Não há bairros cadastrados.</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<upa:paginacao page="${pagina}"/>
 		</div>
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/layout/javascripts/combo-estado-cidade.js}"></script>
+	</th:block>
 </body>
 </html>

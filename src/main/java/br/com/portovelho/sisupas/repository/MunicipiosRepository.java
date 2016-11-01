@@ -21,4 +21,6 @@ public interface MunicipiosRepository extends JpaRepository<Municipio, Long>, Mu
 	public List<Municipio> findAllByOrderByNome();
 
 	public Optional<Municipio> findByNomeIgnoreCaseAndUf(String nome, UF uf);
+	
+	public List<Municipio> findByUfId(Long uf);
 }
