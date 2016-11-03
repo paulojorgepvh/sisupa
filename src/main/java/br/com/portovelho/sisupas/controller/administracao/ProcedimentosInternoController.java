@@ -20,7 +20,7 @@ import br.com.portovelho.sisupas.service.ProcedimentoInternoService;
 
 
 @Controller
-@RequestMapping("/administracao/procedimentoInterno")
+@RequestMapping("/administracao/procedimentosInternos")
 public class ProcedimentosInternoController {
 
 	private static final String PROCED_INTERNO_CAD_VIEW = "/administracao/procedimentoInterno/CadastroProcedimentoInterno";

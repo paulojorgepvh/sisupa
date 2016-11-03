@@ -10,7 +10,7 @@ import org.thymeleaf.standard.StandardDialect;
 import br.com.portovelho.sisupas.thymeleaf.processor.ClassForErrorAttributeTagProcessor;
 import br.com.portovelho.sisupas.thymeleaf.processor.MessageElementTagProcessor;
 import br.com.portovelho.sisupas.thymeleaf.processor.OrderElementTagProcessor;
-import br.com.portovelho.sisupas.thymeleaf.processor.PageElementTagProcessor;
+import br.com.portovelho.sisupas.thymeleaf.processor.PaginationElementTagProcessor;
 
 public class UpaDialect extends AbstractProcessorDialect {
 
@@ -24,7 +24,7 @@ public class UpaDialect extends AbstractProcessorDialect {
 		processadores.add(new ClassForErrorAttributeTagProcessor(dialectPrefix));
 		processadores.add(new MessageElementTagProcessor(dialectPrefix));
 		processadores.add(new OrderElementTagProcessor(dialectPrefix));
-		processadores.add(new PageElementTagProcessor(dialectPrefix));
+		processadores.add(new PaginationElementTagProcessor(dialectPrefix));
 		return processadores;
 	}
 }

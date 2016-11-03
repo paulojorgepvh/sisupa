@@ -36,10 +36,6 @@ public class CbosController {
 	@Autowired
 	private CboService cboService;
 
-	/*
-	 * @Autowired private CadastroCboService cadastroCboService;
-	 */
-
 	@Autowired
 	private CbosRepository cbosRepository;
 
@@ -60,22 +56,6 @@ public class CbosController {
 		ModelAndView mv = new ModelAndView(CBO_CAD_VIEW);
 		return mv;
 	}
-
-	/*@PostMapping("/novo")
-	public ModelAndView salvarCbo(@Valid CBO cbo, BindingResult result, Model model, RedirectAttributes attributes) {
-		if (result.hasErrors()) {
-			return novoCbo(cbo);
-		}
-		try {
-			cadastroCboService.salvar(cbo);
-		} catch (NomeMunicipioJaCadastradoException e) {
-			result.rejectValue("descricao", e.getMessage(), e.getMessage());
-			result.rejectValue("codigo", e.getMessage(), e.getMessage());
-			return novoCbo(cbo);
-		}
-		attributes.addFlashAttribute("mensagem", "CBO salvo com sucesso!");
-		return new ModelAndView("redirect:/administracao/cbos/novo");
-	}*/
 
 	@PostMapping("/novo")
 	public ModelAndView salvarCbo(@Valid CBO cbo, BindingResult result, Model model, RedirectAttributes attributes) {

@@ -21,7 +21,7 @@
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-success" th:href="@{/administracao/cbos/novo}">
+							<a class="btn btn-primary" th:href="@{/administracao/cbos/novo}">
 								<i class="fa  fa-plus-circle"></i> <span
 								class="hidden-xs  hidden-sm">Novo CBO</span>
 							</a>
@@ -67,15 +67,14 @@
 					<tbody>
 						<tr th:each="cbo : ${pagina.conteudo}">
 							<td class="text-center" th:text="${cbo.codigo}"></td>
-							<td><a th:href="@{/administracao/cbo/{id}(id=${cbo.id})}"
-								th:text="${cbo.descricao}"></a></td>
-							<td class="table-pesq-produto-col-estoque"><a
-								class="js-atualizar-status" th:attr="data-id=${cbo.id}"
-								th:href="@{/administracao/cbo/{id}/status(id=${cbo.id})}">
-									<span class="tamanho-icone-ativo"
-									th:attr="data-role=${cbo.id}"
-									th:classappend="${cbo.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
-							</a></td>
+							<td>
+								<a th:href="@{/administracao/cbos/{id}(id=${cbo.id})}" th:text="${cbo.descricao}"></a>
+							</td>
+							<td class="table-pesq-produto-col-estoque">
+								<a class="js-atualizar-status" th:attr="data-id=${cbo.id}" th:href="@{/administracao/cbos/{id}/status(id=${cbo.id})}">
+									<span class="tamanho-icone-ativo" th:attr="data-role=${cbo.id}" th:classappend="${cbo.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
+								</a>
+							</td>
 						</tr>
 						<tr th:if="${pagina.vazia}">
 							<td colspan="3">Não há CBO cadastrado.</td>
@@ -83,7 +82,7 @@
 					</tbody>
 				</table>
 			</div>
-			<upa:paginacao page="${pagina}"/>
+			<upa:paginacao pagination="${pagina}"/>
 		</div>
 	</section>
 		

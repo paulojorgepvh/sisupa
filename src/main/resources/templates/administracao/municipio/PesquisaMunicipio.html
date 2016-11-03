@@ -21,7 +21,7 @@
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-success"
+							<a class="btn btn-primary"
 								th:href="@{/administracao/municipios/novo}"> <i
 								class="fa  fa-plus-circle"></i> <span
 								class="hidden-xs  hidden-sm">Novo municipio</span>
@@ -66,9 +66,9 @@
 					</thead>
 					<tbody>
 						<tr th:each="municipio : ${pagina.conteudo}">
-							<td class="text-center" ><a
-								th:href="@{/administracao/municipio/{id}(id=${municipio.id})}"
-								th:text="${municipio.codigoIbge}"></a></td>
+							<td class="text-center" >
+								<a	th:href="@{/administracao/municipios/{id}(id=${municipio.id})}"	th:text="${municipio.codigoIbge}"></a>
+							</td>
 							<td th:text="${municipio.nome}"></td>
 							<td class="text-center" th:text="${municipio.uf.nome}"></td>
 						</tr>
@@ -80,7 +80,7 @@
 			</div>
 			
 			
-			<upa:paginacao page="${pagina}"/>
+			<upa:paginacao pagination="${pagina}"/>
 			
 		</div>
 	</section>

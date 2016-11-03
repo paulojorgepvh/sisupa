@@ -9,12 +9,12 @@ import org.thymeleaf.processor.element.AbstractElementTagProcessor;
 import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.templatemode.TemplateMode;
 
-public class PageElementTagProcessor extends AbstractElementTagProcessor {
+public class PaginationElementTagProcessor extends AbstractElementTagProcessor {
 
 	private static final String NOME_TAG = "paginacao";
 	private static final int PRECEDENCIA = 1000;
 
-	public PageElementTagProcessor(String dialectPrefix) {
+	public PaginationElementTagProcessor(String dialectPrefix) {
 		super(TemplateMode.HTML, dialectPrefix, NOME_TAG, true, null, false, PRECEDENCIA);
 	}
 
@@ -22,7 +22,7 @@ public class PageElementTagProcessor extends AbstractElementTagProcessor {
 	protected void doProcess(ITemplateContext context, IProcessableElementTag tag,
 			IElementTagStructureHandler structureHandler) {
 
-		IAttribute page = tag.getAttribute("page");
+		IAttribute pagination = tag.getAttribute("pagination");
 		
 		IModelFactory modelFactory = context.getModelFactory();
 		IModel model = modelFactory.createModel();
@@ -30,7 +30,7 @@ public class PageElementTagProcessor extends AbstractElementTagProcessor {
 		model.add(modelFactory.createStandaloneElementTag(
 				"th:block", 
 				"th:replace", 
-				String.format("fragments/Paginacao :: page (%s)", page.getValue())));
+				String.format("fragments/Paginacao :: pagination (%s)", pagination.getValue())));
 
 		structureHandler.replaceWith(model, true);
 	}

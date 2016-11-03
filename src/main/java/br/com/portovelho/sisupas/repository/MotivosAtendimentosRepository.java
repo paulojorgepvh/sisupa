@@ -1,18 +1,16 @@
 package br.com.portovelho.sisupas.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.portovelho.sisupas.model.MotivoAtendimento;
+import br.com.portovelho.sisupas.repository.helper.motivoAtendimento.MotivosAtendimentosRepositoryQueries;
 
 @Repository
-public interface MotivosAtendimentosRepository extends JpaRepository<MotivoAtendimento, Long> {
+public interface MotivosAtendimentosRepository extends JpaRepository<MotivoAtendimento, Long>, MotivosAtendimentosRepositoryQueries {
     
-    public List<MotivoAtendimento> findByDescricaoContainingOrderByDescricaoAsc(String descricao);
+	public Optional<MotivoAtendimento> findByDescricaoIgnoreCase(String descricao);
 
-    public MotivoAtendimento findByDescricao(String descricao);
-
-    public List<MotivoAtendimento> findAllByOrderByDescricao();
 }
