@@ -32,20 +32,27 @@
 		</div>
 
 		<div class="container-fluid">
-			<form method="get" class="form-horizontal" th:action="@{/administracao/procedimentosInternos}" th:object="${filtro}">
-				<div class="form-group">
-					<div class="col-sm-8">
-						<div class="input-group">
-							<input class="form-control" th:field="*{descricao}"	placeholder="Qual procedimento interno você está procurando?" autofocus="autofocus"></input> 
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
+			<form method="GET" th:object="${filtro}">
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label class="control-label" for="descricao">Descrição</label> 
+							<input id="descricao" type="text" class="form-control" autofocus="autofocus" th:field="*{descricao}"/>
+						</div>
+					<!-- </div>	
+					<div class="row"> -->
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="tipoSalaAtendimento">Tipo de sala de atendimento</label> 
+									<select class="form-control" name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}">
+										<option value="">Selecione a sala de atendimento</option>
+										<option th:each="tipoSala : ${todosTiposSalas}" th:value="${tipoSala}" th:text="${tipoSala.descricao}"></option>
+								</select>
+							</div>
 						</div>
 					</div>
-				</div>
+				<button type="submit" class="btn  btn-success">Pesquisar</button>
 			</form>
+		
 			
 			<div class="row  aw-datatable-toolbar"></div>
 
@@ -74,7 +81,7 @@
 								</a>
 							</td>
 						</tr>
-						<tr th:if="${pagina.conteudo}">
+						<tr th:if="${pagina.vazia}">
 							<td colspan="4">Não há procedimentos cadastrados.</td>
 						</tr>
 					</tbody>

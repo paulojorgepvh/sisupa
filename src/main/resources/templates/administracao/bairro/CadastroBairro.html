@@ -30,9 +30,9 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? 'has-error'">
-					<label for="nome">Nome*</label> <input id="nome" type="text"
-						class="form-control" th:field="*{nome}" />
+				<div class="form-group" upa:classforerror="nome">
+					<label for="nome">Nome*</label> 
+					<input id="nome" type="text" class="form-control" th:field="*{nome}" />
 				</div>
 				<div class="row">
 					<div class="col-sm-3">

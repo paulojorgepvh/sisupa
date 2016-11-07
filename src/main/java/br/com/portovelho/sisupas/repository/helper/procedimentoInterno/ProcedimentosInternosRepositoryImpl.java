@@ -1,4 +1,4 @@
-package br.com.portovelho.sisupas.repository.helper.salaAtendimento;
+package br.com.portovelho.sisupas.repository.helper.procedimentoInterno;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,11 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import br.com.portovelho.sisupas.model.SalaAtendimento;
-import br.com.portovelho.sisupas.repository.filter.SalaAtendimentoFiltro;
+import br.com.portovelho.sisupas.model.ProcedimentoInterno;
+import br.com.portovelho.sisupas.repository.filter.ProcedimentoInternoFiltro;
 import br.com.portovelho.sisupas.repository.paginacao.PaginacaoUtil;
 
-public class SalasAtendimentoRepositoryImpl implements SalasAtendimentoRepositoryQueries {
+public class ProcedimentosInternosRepositoryImpl implements ProcedimentosInternosRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -30,8 +30,8 @@ public class SalasAtendimentoRepositoryImpl implements SalasAtendimentoRepositor
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public Page<SalaAtendimento> filtrar(SalaAtendimentoFiltro filtro, Pageable pageable) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(SalaAtendimento.class);
+	public Page<ProcedimentoInterno> filtrar(ProcedimentoInternoFiltro filtro, Pageable pageable) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(ProcedimentoInterno.class);
 
 		paginacaoUtil.preparar(criteria, pageable);
 
@@ -40,7 +40,7 @@ public class SalasAtendimentoRepositoryImpl implements SalasAtendimentoRepositor
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
 
-	private void adicionarFiltro(SalaAtendimentoFiltro filtro, Criteria criteria) {
+	private void adicionarFiltro(ProcedimentoInternoFiltro filtro, Criteria criteria) {
 		if (filtro != null) {
 			if (!StringUtils.isEmpty(filtro.getDescricao())) {
 				criteria.add(Restrictions.ilike("descricao", filtro.getDescricao(), MatchMode.ANYWHERE));
@@ -50,16 +50,12 @@ public class SalasAtendimentoRepositoryImpl implements SalasAtendimentoRepositor
 					criteria.add(Restrictions.eq("tipoSalaAtendimento", filtro.getTipoSalaAtendimento()));
 				}
 			}
-			if (filtro.getStatusSalaAtendimento() != null) {
-				if (filtro.getStatusSalaAtendimento().getDescricao() != null) {
-					criteria.add(Restrictions.eq("statusSalaAtendimento", filtro.getStatusSalaAtendimento()));
-				}
-			}
+
 		}
 	}
 
-	private Long total(SalaAtendimentoFiltro filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(SalaAtendimento.class);
+	private Long total(ProcedimentoInternoFiltro filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(ProcedimentoInterno.class);
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();

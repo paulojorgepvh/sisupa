@@ -2,7 +2,8 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	xmlns:upa="http://sisupas.portovelho.org.com.br"
+	layout:decorator="~{layout/LayoutPadrao}">
 
 <head>
 <title>UPA-24h</title>
@@ -21,7 +22,7 @@
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
 							<a class="btn btn-primary"
-								th:href="@{/administracao/salaAtendimento/novo}"> <i
+								th:href="@{/administracao/salasAtendimentos/nova}"> <i
 								class="fa  fa-plus-circle"></i> <span
 								class="hidden-xs  hidden-sm">Nova sala de atendimento</span>
 							</a>
@@ -32,40 +33,41 @@
 		</div>
 
 		<div class="container-fluid">
-			<form method="get" class="form-horizontal"
-				th:action="@{/administracao/salaAtendimento}"
-				th:object="${filtro}">
-				<div class="form-group">
-					<div class="col-sm-8">
-						<div class="input-group">
-							<input class="form-control" th:field="*{descricao}"
-								placeholder="Qual sala de atendimento você está procurando?"
-								autofocus="autofocus"></input> <span class="input-group-btn">
-								<button type="submit" class="btn btn-default">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
+			<form method="GET" th:object="${filtro}">
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label class="control-label" for="descricao">Descrição</label> 
+							<input id="descricao" type="text" class="form-control" autofocus="autofocus" th:field="*{descricao}"/>
+						</div>
+					<!-- </div>	
+					<div class="row"> -->
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="tipoSalaAtendimento">Tipo de sala de atendimento</label> 
+									<select class="form-control" name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}">
+										<option value="">Selecione a sala de atendimento</option>
+										<option th:each="tipoSala : ${todosTiposSalas}" th:value="${tipoSala}" th:text="${tipoSala.descricao}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="statusSalaAtendimento">Status da Sala</label> 
+								<select class="form-control" name="statusSalaAtendimento" th:field="*{statusSalaAtendimento}">
+								<option value="">Todos</option>
+									<option th:each="statusSalaAtendimento : ${todosStatusSalaAtendimento}"
+										th:value="${statusSalaAtendimento}" th:text="${statusSalaAtendimento.descricao}">
+									</option>
+								</select>
+							</div>
 						</div>
 					</div>
-				</div>
+				<button type="submit" class="btn  btn-success">Pesquisar</button>
 			</form>
+		
+		
 			<div class="row  aw-datatable-toolbar">
-				<div class="col-xs-8">
-					<div class="btn-group">
-						<button type="button"
-							class="btn  btn-default  btn-sm  dropdown-toggle"
-							data-toggle="dropdown" aria-expanded="false">
-							<i
-								class="fa  fa-arrow-circle-down  visible-md-inline  visible-lg-inline"></i>
-							<span>Exportar</span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Para arquivo Excel</a></li>
-							<li><a href="#">Para arquivo CSV</a></li>
-							<li><a href="#">Para arquivo XML</a></li>
-						</ul>
-					</div>
-				</div>
+				
 			</div>
 
 			<div class="table-responsive">
@@ -73,34 +75,39 @@
 					class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 					<thead class="aw-table-header-solid">
 						<tr>
-							<th>Descrição</th>
-							<th class="text-center col-md-1">Número da Sala</th>
-							<th class="text-center col-md-2">Tipo de Sala</th>
-							<th class="text-center col-md-2">Status</th>
+							<th>
+								<upa:ordenacao page="${pagina}" field="descricao" text="Descrição"/>
+							</th>
+							<th class="text-center col-md-2">Número da Sala</th>
+							<th class="text-center col-md-2">Tipo de Sala
+								<!-- <upa:ordenacao page="${pagina}" field="tipoSalaAtendimento" text="Tipo de Sala"/> -->
+							</th>
+							<th class="text-center col-md-2">
+								<upa:ordenacao page="${pagina}" field="statusSalaAtendimento" text="Status"/>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="salaAtendimento : ${salaAtendimentos}">
-							<td><a
-								th:href="@{/administracao/salaAtendimento/{id}(id=${salaAtendimento.id})}"
-								th:text="${salaAtendimento.descricao}"></a></td>
-								<td class="text-center" th:text="${salaAtendimento.numero}"></td>
-								<td class="text-center" th:text="${salaAtendimento.tipoSalaAtendimento.descricao}"></td>
-							
-							<!-- <td class="table-pesq-produto-col-estoque"><a
-								class="js-atualizar-status" th:attr="data-id=${salaAtendimento.id}"
-								th:href="@{/administracao/salaAtendimento/{id}/status(id=${salaAtendimento.id})}">
-									<span class="tamanho-icone-ativo"
-									th:attr="data-role=${salaAtendimento.id}"
-									th:classappend="${salaAtendimento.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>
-							</a></td> -->
+						<tr th:each="salaAtendimento : ${pagina.conteudo}">
+							<td>
+								<a th:href="@{/administracao/salasAtendimentos/{id}(id=${salaAtendimento.id})}" th:text="${salaAtendimento.descricao}"></a>
+							</td>
+							<td class="text-center" th:text="${salaAtendimento.numero}"></td>
+							<td class="text-center" th:text="${salaAtendimento.tipoSalaAtendimento.descricao}"></td>
+							<td class="text-center" th:switch="${salaAtendimento.statusSalaAtendimento.descricao}">
+								<span th:case="'Aberta'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-success"></span>
+								<span th:case="'Em Manutenção'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-warning"></span>
+								<span th:case="'Inativa'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-danger"></span>
+								<span th:case="'Ocupada'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-info"></span>  
+							</td>
 						</tr>
-						<tr th:if="${#lists.isEmpty(salasAtendimento)}">
+						<tr th:if="${pagina.vazia}">
 							<td colspan="5">Não há Salas de Atendimento cadastradas.</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<upa:paginacao pagination="${pagina}"/>
 		</div>
 	</section>
 </body>

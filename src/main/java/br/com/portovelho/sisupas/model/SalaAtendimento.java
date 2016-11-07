@@ -3,6 +3,7 @@ package br.com.portovelho.sisupas.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,11 +41,11 @@ public class SalaAtendimento implements Serializable{
 	@NotNull(message = "O campo Número é obrigatório!")
 	private Integer numero;
 	
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O campo Tipo da Sala é obrigatório!")
 	private TipoSalaAtendimento tipoSalaAtendimento;
 		
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O campo Status da Sala é obrigatório!")
 	private StatusSalaAtendimento statusSalaAtendimento;
 	

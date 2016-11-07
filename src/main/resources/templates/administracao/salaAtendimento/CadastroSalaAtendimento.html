@@ -2,7 +2,8 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	xmlns:upa="http://sisupas.portovelho.org.com.br"
+	layout:decorator="~{layout/LayoutPadrao}">
 
 <head>
 <title>UPA-24h</title>
@@ -19,35 +20,27 @@
 
 		<div class="container-fluid">
 
-			<form method="post" class="form-vertical  js-form-loading"
-				th:action="@{/administracao/salaAtendimento/novo}"
-				th:object="${salaAtendimento}">
+			<form method="post" class="form-vertical  js-form-loading" th:action="@{/administracao/salasAtendimentos/nova}" th:object="${salaAtendimento}">
 
-				<div layout:include="mensagens/MensagemGeral"></div>
-				<div layout:include="mensagens/MensagemErroValidacao"></div>
+				<upa:message/>
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group"
-					th:classappend="${#fields.hasErrors('descricao')} ? 'has-error'">
-					<label for="descricao">Descrição*</label> <input id="descricao"
-						type="text" class="form-control" th:field="*{descricao}" />
+				<div class="form-group" upa:classforerror="descricao">
+					<label for="descricao">Descrição*</label> <input id="descricao"	type="text" class="form-control" th:field="*{descricao}" />
 				</div>
 
 				<div class="row">
 					<div class="col-sm-2">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('numero')} ? 'has-error'">
+						<div class="form-group" upa:classforerror="numero">
 							<label for="numero">Número*</label> 
 							<input id="numero" type="text" class="form-control" th:field="*{numero}" />
 						</div>
 					</div>
 
 					<div class="col-sm-4">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('tipoSalaAtendimento')} ? 'has-error'">
-							<label for="tipoSalaAtendimento">Tipo de sala de
-								atendimento</label> 
+						<div class="form-group" upa:classforerror="tipoSalaAtendimento">
+							<label for="tipoSalaAtendimento">Tipo de sala de atendimento</label> 
 								<select class="form-control" name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}">
 									<option value="">Selecione a sala de atendimento</option>
 									<option th:each="tipoSala : ${todosTiposSalas}" th:value="${tipoSala}" th:text="${tipoSala.descricao}"></option>
@@ -55,22 +48,19 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('statusSalaAtendimento')} ? 'has-error'">
+						<div class="form-group" upa:classforerror="statusSalaAtendimento">
 							<label for="statusSalaAtendimento">Status da Sala</label> 
 							<select class="form-control" name="statusSalaAtendimento" th:field="*{statusSalaAtendimento}">
-								
 								<option th:each="statusSalaAtendimento : ${todosStatusSalaAtendimento}"
-									th:value="${statusSalaAtendimento}"
-									th:text="${statusSalaAtendimento.descricao}"></option>
+									th:value="${statusSalaAtendimento}" th:text="${statusSalaAtendimento.descricao}">
+								</option>
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
-					<a th:href="@{/administracao/salaAtendimento/}"
-						class="btn  btn-default">Cancelar</a>
+					<button class="btn  btn-success" type="submit">Salvar</button>
+					<a th:href="@{/administracao/salasAtendimentos/}" class="btn  btn-danger">Cancelar</a>
 				</div>
 			</form>
 		</div>

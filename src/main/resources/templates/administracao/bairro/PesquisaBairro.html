@@ -38,14 +38,14 @@
 				<div class="row">
 				
 					<div class="form-group col-sm-5">
-						<label class="control-label" for="nome">Nome*</label> 
+						<label class="control-label" for="nome">Nome</label> 
 						<input id="nome" type="text" class="form-control" autofocus="autofocus" th:field="*{nome}"/>
 					</div>
 				<!-- </div>	
 				<div class="row"> -->
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label class="control-label" for="uf">UF*</label> 
+							<label class="control-label" for="uf">UF</label> 
 							<select id="uf" class="form-control" name="uf" th:field="*{municipio.uf}">
 								<option value="">Selecione a UF</option>
 								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"
@@ -55,7 +55,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label class="control-label" for="municipio">Município*</label> 
+							<label class="control-label" for="municipio">Município</label> 
 							<div class="upa-field-action">
 								<select id="municipio" class="form-control" name="municipio" th:field="*{municipio}" data:url="@{/administracao/municipios}">
 								</select>

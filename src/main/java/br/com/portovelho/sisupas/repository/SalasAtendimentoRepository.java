@@ -1,5 +1,7 @@
 package br.com.portovelho.sisupas.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +10,6 @@ import br.com.portovelho.sisupas.repository.helper.salaAtendimento.SalasAtendime
 
 @Repository
 public interface SalasAtendimentoRepository extends JpaRepository<SalaAtendimento, Long>, SalasAtendimentoRepositoryQueries{
+	public Optional<SalaAtendimento> findByDescricaoIgnoreCase(String descricao);
+
 }

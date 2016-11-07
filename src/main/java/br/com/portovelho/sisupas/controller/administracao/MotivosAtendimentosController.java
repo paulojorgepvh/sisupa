@@ -29,7 +29,7 @@ import br.com.portovelho.sisupas.service.exception.DescricoMotivoAtendimentoJaCa
 
 @Controller
 @RequestMapping("/administracao/motivosAtendimentos")
-public class MotivosAtendimentoController {
+public class MotivosAtendimentosController {
 
 	private static final String MOTIVO_ATEND_CAD_VIEW = "/administracao/motivoAtendimento/CadastroMotivoAtendimento";
 	private static final String MOTIVO_ATEND_PESQUISA_VIEW = "/administracao/motivoAtendimento/PesquisaMotivoAtendimento";
