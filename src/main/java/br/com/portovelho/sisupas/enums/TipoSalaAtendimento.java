@@ -1,23 +1,23 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum TipoSalaAtendimento {
-	ASSISTENCIA_SOCIAL("Assistência Social"),
-	CONSULTORIO_MED("Consultório Médico"),
-	CONSULTORIO_MED_PED("Consultório Médico Pediátrico"),
+	ASSISTENCIA_SOCIAL("ASSISTÊNCIA SOCIAL"),
+	CONSULTORIO_MED("CONSULTÓRIO MÉDICO"),
+	CONSULTORIO_MED_PED("CONSULTÓRIO MÉDICO PEDIÁTRICO"),
 //	FARMACIA("Farmácia"),
 //	GERAL("Geral"),
-	ELETRO("Eletrocardiograma"),
-	LABORATORIO("Laboratório"),
-	MEDICACAO("Medicação"),
-	OBSERVACAO_FEM("Observação Feminina"),
-	OBSERVACAO_MAS("Observação Masculina"),
-	OBSERVACAO_PED("Observação Pediátrica"),
-	ODONTOLOGIA("Odontologia"),
-	PROCEDIMENTO("Procedimento"),
-	RADIOLOGIA("Radiologia"),
-	SALA_VERMELHA("Sala Vermelha"),
-	SUTURA("Sutura"),
-	TRIAGEM("Triagem");
+	ELETRO("ELETROCARDIOGRAMA"),
+	LABORATORIO("LABORATÓRIO"),
+	MEDICACAO("MEDICAÇÃO"),
+	OBSERVACAO_FEM("OBSERVAÇÃO FEMINIA"),
+	OBSERVACAO_MAS("OBSERVAÇÃO MASCULINA"),
+	OBSERVACAO_PED("OBSERVAÇÃO PEDIÁTRICA"),
+	ODONTOLOGIA("ODONTOLOGIA"),
+	PROCEDIMENTOS("PROCEDIMENTOS"),
+	RADIOLOGIA("RADIOLOGIA"),
+	SALA_VERMELHA("SALA VERMELHA"),
+	SUTURA("SUTURA"),
+	TRIAGEM("TRIAGEM");
 //	ULTRASONOGRAFIA("Ultrasonografia");
 				
 	private String descricao;

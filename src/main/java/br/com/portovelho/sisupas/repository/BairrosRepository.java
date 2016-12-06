@@ -12,10 +12,13 @@ import br.com.portovelho.sisupas.repository.helper.bairro.BairrosRepositoryQueri
 
 @Repository
 public interface BairrosRepository extends JpaRepository<Bairro, Long>, BairrosRepositoryQueries {
+	
 	public List<Bairro> findAllByOrderByNomeAsc();
 
 	public List<Bairro> findByNomeContainingOrderByNomeAsc(String nome);
 
 	public Optional<Bairro> findByNomeIgnoreCaseAndMunicipio(String nome, Municipio municipio);
+
+	public List<Bairro> findByMunicipioIdAndStatusTrue(Long municipio);
 
 }

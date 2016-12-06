@@ -1,9 +1,9 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum Estrutura {
-	NORMAL("Normal"), ALTO("Alto"), BAIXO("Baixo");
+	NORMAL("NORMAL"), ALTO("ALTO"), BAIXO("BAIXO");
 
-	private String descricao;
+	private final String descricao;
 
 	private Estrutura(String descricao) {
 		this.descricao = descricao;

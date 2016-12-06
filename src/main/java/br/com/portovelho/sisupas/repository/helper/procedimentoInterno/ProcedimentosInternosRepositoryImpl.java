@@ -45,11 +45,12 @@ public class ProcedimentosInternosRepositoryImpl implements ProcedimentosInterno
 			if (!StringUtils.isEmpty(filtro.getDescricao())) {
 				criteria.add(Restrictions.ilike("descricao", filtro.getDescricao(), MatchMode.ANYWHERE));
 			}
-			if (filtro.getTipoSalaAtendimento() != null) {
+			
+			/*if (filtro.getTipoSalaAtendimento() != null) {
 				if (filtro.getTipoSalaAtendimento().getDescricao() != null) {
-					criteria.add(Restrictions.eq("tipoSalaAtendimento", filtro.getTipoSalaAtendimento()));
+					criteria.add(Restrictions.ilike("tipoSalaAtendimento", filtro.getTipoSalaAtendimento().name()));
 				}
-			}
+			}*/
 
 		}
 	}

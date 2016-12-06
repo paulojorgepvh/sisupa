@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/LayoutPadrao}"
+	xmlns:upa="http://sisupas.portovelho.org.com.br">
+
+<head>
+<title>UPA-24h</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+	<div layout:include="mensagens/MensagemGeral"></div>
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de atendimentos identificados</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-primary"
+								th:href="@{/same/atendimentosIdentificados/novo}"> <i
+								class="fa  fa-plus-circle"></i> <span
+								class="hidden-xs  hidden-sm">Novo atendimento identificado</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+		<form method="get" class="form-horizontal" th:action="@{/same/atendimentosIdentificados}"
+				th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input class="form-control" th:field="*{senha}"
+								   placeholder="Qual atendimento você esta procurando?"
+								   autofocus="autofocus"></input> 
+								   <span class="input-group-btn">
+								<button type="submit" class="btn btn-success">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<div class="row  aw-datatable-toolbar"></div>
+
+			<div class="table-responsive">
+				<table id="tabela-produtos" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<thead class="aw-table-header-solid">
+						<tr>
+							<th class="text-center col-md-1">Data/Hora</th>
+							<th class="text-center col-md-1">Senha</th>
+							<th>Nome Completo</th>
+							<th>Motivo do Atendimento</th>
+							<th>Sala</th>
+							<th class="text-center col-md-1">Status</th>
+							<th class="text-center col-md-1">#</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="atendimentoIdentificado : ${pagina.conteudo}">
+							<td class="text-center" th:text="${atendimentoIdentificado.criadoEm}"></td>
+							<td class="text-center" th:text="${atendimentoIdentificado.senha}"></td>
+							<td><a th:href="@{/same/atendimentosIdentificados/{id}(id=${atendimentoIdentificado.id})}" th:text="${atendimentoIdentificado.paciente.nomeCompleto}"></a></td>
+							<td th:text="${atendimentoIdentificado.motivoAtendimento.descricao}"></td>
+							<td th:text="${atendimentoIdentificado.tipoSalaAtendimento.descricao}"></td>
+							<td class="text-center" th:text="${atendimentoIdentificado.statusAtendimento.descricao}"></td>
+							<td class="text-center">
+								<img alt="Detalhes do Atendimento" th:src="@{/layout/images/ico_detalhes.png}"/>
+							</td>
+						</tr>
+						<tr th:if="${pagina.vazia}">
+							<td colspan="7">Não há atendimentos identificados cadastrados.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<upa:paginacao pagination="${pagina}"/>
+		</div>
+	</section>
+</body>
+</html>

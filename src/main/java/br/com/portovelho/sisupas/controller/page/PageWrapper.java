@@ -13,14 +13,16 @@ public class PageWrapper<T> {
 
 	private Page<T> page;
 	private UriComponentsBuilder uriBuilder;
+	
+	private final int maximoLinks = 2;
 
 	public PageWrapper(Page<T> page, HttpServletRequest httpServletRequest) {
 		this.page = page;
-		String httpUrl = httpServletRequest.getRequestURL().append(
-				httpServletRequest.getQueryString() != null ? "?" + httpServletRequest.getQueryString() : "")
-		.toString().replaceAll("\\+", "%20");
+		String httpUrl = httpServletRequest.getRequestURL()
+				.append(httpServletRequest.getQueryString() != null ? "?" + httpServletRequest.getQueryString() : "")
+				.toString().replaceAll("\\+", "%20");
 		this.uriBuilder = UriComponentsBuilder.fromHttpUrl(httpUrl);
-		
+
 	}
 
 	public List<T> getConteudo() {
@@ -47,6 +49,21 @@ public class PageWrapper<T> {
 		return page.getTotalPages();
 	}
 
+	public boolean mostraPaginacao() {
+		/*int totalPages = page.getTotalPages();
+		int size = page.getSize();
+		int numberOfElements = page.getNumberOfElements();
+		int size2 = page.getContent().size();
+		long totalElements = page.getTotalElements();*/
+		
+		
+		return page.getTotalElements() > page.getSize() ? true : false;
+	}
+	
+	public int getUltimaPagina(){
+		return (int) (page.getTotalElements() / page.getSize());
+	}
+
 	public String urlParaPagina(int pagina) {
 		return uriBuilder.replaceQueryParam("page", pagina).build(true).encode().toUriString();
 	}
@@ -54,9 +71,9 @@ public class PageWrapper<T> {
 	public String urlOrdenada(String propriedade) {
 		UriComponentsBuilder uriBuilderOrder = UriComponentsBuilder
 				.fromUriString(uriBuilder.build(true).encode().toUriString());
-		
+
 		String valorSort = String.format("%s,%s", propriedade, inverterDirecao(propriedade));
-		
+
 		return uriBuilderOrder.replaceQueryParam("sort", valorSort).build(true).encode().toUriString();
 	}
 
@@ -70,19 +87,22 @@ public class PageWrapper<T> {
 
 		return direcao;
 	}
-	
-	public boolean descendente(String propriedade){
+
+	public boolean descendente(String propriedade) {
 		return inverterDirecao(propriedade).equals("asc");
 	}
-	
-	public boolean ordenada(String propriedade){
+
+	public boolean ordenada(String propriedade) {
 		Order order = page.getSort() != null ? page.getSort().getOrderFor(propriedade) : null;
-		
-		if(order == null){
+
+		if (order == null) {
 			return false;
 		}
-		
+
 		return page.getSort().getOrderFor(propriedade) != null ? true : false;
 	}
 
+	public int getMaximoLinks() {
+		return maximoLinks;
+	}
 }

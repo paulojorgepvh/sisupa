@@ -22,6 +22,7 @@ public class AtendimentoNaoIdentificado extends Atendimento implements Serializa
 	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O campo Sexo é obrigatório!")
 	private Sexo sexo;
 	
 	@NotNull(message = "O campo Faixa Etária Inicial é obrigatório!")
@@ -43,6 +44,7 @@ public class AtendimentoNaoIdentificado extends Atendimento implements Serializa
 	private PorteFisico porteFisico;
 
 	@OneToOne
+	@NotNull(message = "O campo Município é obrigatório!")
 	private Municipio municipio;
 
 	public Sexo getSexo() {

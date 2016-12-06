@@ -1,7 +1,7 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum PorteFisico {
-	NORMAL("Normal"), GORDO("Gordo"), MAGRO("Magro");
+	NORMAL("NORMAL"), GORDO("GORDO"), MAGRO("MAGRO");
 
 	private String descricao;
 

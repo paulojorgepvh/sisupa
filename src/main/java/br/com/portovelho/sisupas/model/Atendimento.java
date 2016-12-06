@@ -1,7 +1,7 @@
 package br.com.portovelho.sisupas.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -14,9 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,22 +41,18 @@ public abstract class Atendimento implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Long id;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date criadoEm;
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime criadoEm;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date finalizadoEm;
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime finalizadoEm;
 
 	@NotBlank(message = "O campo senha é obrigatório!")
 	private String senha;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O campo Sala de Atendimento é obrigatório!")
 	private TipoSalaAtendimento tipoSalaAtendimento;
-
-	/*@Enumerated(EnumType.STRING)
-	private TipoEspecialidadeSalaAtendimento tipoEspecialidadeSalaAtendimento;*/
 
 	private Boolean emergencia;
 
@@ -63,6 +60,7 @@ public abstract class Atendimento implements Serializable{
 	private StatusAtendimento statusAtendimento;
 
 	@OneToOne
+	@NotNull(message = "O campo Motivo do Atendimento é obrigatório!")
 	private MotivoAtendimento motivoAtendimento;
 
 	private String procedenciaDoFato;
@@ -78,24 +76,34 @@ public abstract class Atendimento implements Serializable{
 	public Atendimento() {
 		this.emergencia = false;
 	}
+	
+	@PrePersist
+	@PreUpdate
+	private void prePersistUpdate() {
+		this.criadoEm = LocalDateTime.now();
+		this.statusAtendimento = StatusAtendimento.ABERTO;
+		this.procedenciaDoFato = procedenciaDoFato.toUpperCase().trim();
+		this.responsavelPaciente = responsavelPaciente.toUpperCase().trim();
+		this.senha = senha.toUpperCase().trim();
+	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public Date getCriadoEm() {
+	public LocalDateTime getCriadoEm() {
 		return criadoEm;
 	}
 
-	public void setCriadoEm(Date criadoEm) {
+	public void setCriadoEm(LocalDateTime criadoEm) {
 		this.criadoEm = criadoEm;
 	}
 
-	public Date getFinalizadoEm() {
+	public LocalDateTime getFinalizadoEm() {
 		return finalizadoEm;
 	}
 
-	public void setFinalizadoEm(Date finalizadoEm) {
+	public void setFinalizadoEm(LocalDateTime finalizadoEm) {
 		this.finalizadoEm = finalizadoEm;
 	}
 
@@ -114,14 +122,6 @@ public abstract class Atendimento implements Serializable{
 	public void setTipoSalaAtendimento(TipoSalaAtendimento tipoSalaAtendimento) {
 		this.tipoSalaAtendimento = tipoSalaAtendimento;
 	}
-
-	/*public TipoEspecialidadeSalaAtendimento getTipoEspecialidadeSalaAtendimento() {
-		return tipoEspecialidadeSalaAtendimento;
-	}
-
-	public void setTipoEspecialidadeSalaAtendimento(TipoEspecialidadeSalaAtendimento tipoEspecialidadeSalaAtendimento) {
-		this.tipoEspecialidadeSalaAtendimento = tipoEspecialidadeSalaAtendimento;
-	}*/
 
 	public Boolean getEmergencia() {
 		return emergencia;

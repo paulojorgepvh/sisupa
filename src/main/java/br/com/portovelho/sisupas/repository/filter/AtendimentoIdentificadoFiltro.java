@@ -1,13 +1,16 @@
 package br.com.portovelho.sisupas.repository.filter;
 
 public class AtendimentoIdentificadoFiltro {
-	private String nomeCompleto;
+	
+	private String senha;
 
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
+
+	
 }

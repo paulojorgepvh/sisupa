@@ -29,14 +29,14 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" upa:classforerror="descricao">
-					<label for="descricao">Descrição*</label> 
+				<div class="form-group upa-required" upa:classforerror="descricao">
+					<label for="descricao" class="control-label">Descrição</label> 
 					<input id="descricao" type="text" class="form-control" th:field="*{descricao}"/>
 				</div>
 				<div class="row">
 					<div class="col-sm-2">
-						<div class="form-group" upa:classforerror="codigo">
-							<label for="codigo">Código*</label> 
+						<div class="form-group upa-required" upa:classforerror="codigo">
+							<label for="codigo" class="control-label">Código</label> 
 							<input id="codigo" type="text" class="form-control" th:field="*{codigo}"/>
 						</div>
 					</div>

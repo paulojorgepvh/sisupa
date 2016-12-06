@@ -2,7 +2,7 @@ package br.com.portovelho.sisupas.enums;
 
 public enum TipoIdade {
 
-	ANOS("Anos"), MESES("Meses"), DIAS("Dias");
+	ANOS("ANOS"), MESES("MESES"), DIAS("DIAS");
 
 	private String descricao;
 

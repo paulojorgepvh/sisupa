@@ -1,6 +1,83 @@
 <!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://brewer.algaworks.com">
+	
+<body>
+<aside class="aw-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
+	<div class="aw-layout-sidebar__content">
+
+    	<nav class="aw-menu  js-menu">
+      		<ul class="aw-menu__list">
+
+        		<li class="aw-menu__item">
+          			<a href="dashboard.html"><i class="fa  fa-fw  fa-home"></i><span>Dashboard</span></a>
+        		</li>
+
+        		<li class="aw-menu__item">
+          			<a href="#">
+            			<i class="fa  fa-fw  fa-database"></i><span>Administração</span>
+            			<i class="aw-menu__navigation-icon  fa"></i>
+          			</a>
+      
+          			<ul class="aw-menu__list  aw-menu__list--sublist">
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/bairros}">
+			            	<a th:href="@{/administracao/bairros}">Bairros</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/cbos}">
+			            	<a th:href="@{/administracao/cbos}">Cbos</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/motivosAtendimentos}">
+			            	<a th:href="@{/administracao/motivosAtendimentos}">Motivos do atendimento</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/municipios}">
+			            	<a th:href="@{/administracao/municipios}">Municípios</a>
+			            </li>
+			              <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/procedimentosInternos}">
+			            	<a th:href="@{/administracao/procedimentosInternos}">Procedimentos internos</a>
+			            </li>
+			             <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/profissionaisSaude}">
+			            	<a th:href="@{/administracao/profissionaisSaude}">Profissionais de saúde</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/administracao/salasAtendimentos}">
+			            	<a th:href="@{/administracao/salasAtendimentos}">Salas de atendimento</a>
+			            </li>
+          			</ul>
+        		</li>
+
+        		<li class="aw-menu__item">
+          			<a href="#">
+            			<i class="fa  fa-fw  fa-database"></i><span>SAME</span>
+            			<i class="aw-menu__navigation-icon  fa"></i>
+          			</a>
+
+          			<ul class="aw-menu__list  aw-menu__list--sublist">
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/same/pacientes}">
+			            	<a th:href="@{/same/pacientes}">Pacientes</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/same/atendimentosNaoIdentificados}">
+			            	<a th:href="@{/same/atendimentosNaoIdentificados}">Atendimentos não identificados</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/same/atendimentosIdentificados}">
+			            	<a th:href="@{/same/atendimentosIdentificados}">Atendimentos identificados</a>
+			            </li>
+          			</ul>
+        		</li>
+
+      		</ul>
+    	</nav>
+	</div>
+</aside>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://brewer.algaworks.com">
 <body>
 	<aside class="aw-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
 		<div class="aw-layout-sidebar__content">
@@ -45,4 +122,4 @@
 		</div>
 	</aside>
 </body>
-</html>
+</html> -->

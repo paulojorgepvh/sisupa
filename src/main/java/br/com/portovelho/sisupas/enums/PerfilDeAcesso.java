@@ -1,7 +1,7 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum PerfilDeAcesso {
-	ATD("Atendente"),ADM("Administrador"), EF("Enfermeiro"),MD("Médico");
+	ATD("ATENDENTE"),ADM("ADMINISTRADOR"), EF("ENFERMEIRO"),MD("MÉDICO");
 	
 	private String descricao;
 

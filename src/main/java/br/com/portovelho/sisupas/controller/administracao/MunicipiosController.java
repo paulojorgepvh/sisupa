@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
@@ -61,11 +63,12 @@ public class MunicipiosController {
 	@RequestMapping("/novo")
 	public ModelAndView novoMunicipio(Municipio municipio) {
 		ModelAndView mv = new ModelAndView(MUNICIPIO_CAD_VIEW);
-		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome());
+		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNomeAsc());
 		return mv;
 	}
 
 	@PostMapping("/novo")
+	@CacheEvict(value = "municipios", key = "#municipio.uf.id", condition = "#municipio.temUf()")
 	public ModelAndView salvarMunicipio(@Valid Municipio municipio, BindingResult result, Model model,
 			RedirectAttributes attributes) {
 		if (result.hasErrors()) {
@@ -88,10 +91,11 @@ public class MunicipiosController {
 		return mv;
 	}
 
+	@Cacheable(value = "municipios", key = "#uf")
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Municipio> pesquisarPorIdUf(@RequestParam(name = "uf", defaultValue = "-1") Long uf) {
 		List<Municipio> findByUfId = municipiosRepository.findByUfId(uf);
-		
+
 		return findByUfId;
 	}
 

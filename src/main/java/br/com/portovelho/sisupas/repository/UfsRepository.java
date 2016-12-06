@@ -10,6 +10,5 @@ import br.com.portovelho.sisupas.model.UF;
 @Repository
 public interface UfsRepository extends JpaRepository<UF, Long>{
 
-	List<UF> findAllByOrderByNome();
-
+	public List<UF> findAllByOrderByNomeAsc();
 }

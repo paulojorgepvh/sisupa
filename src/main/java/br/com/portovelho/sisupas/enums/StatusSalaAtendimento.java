@@ -1,7 +1,7 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum StatusSalaAtendimento {
-	ABERTA("Aberta"),EM_MANUTENCAO("Em Manutenção"),INATIVA("Inativa"),OCUPADA("Ocupada");
+	ABERTA("ABERTA"),EM_MANUTENCAO("EM MANUTENÇÃO"),INATIVA("INATIVA"),OCUPADA("OCUPADA");
 
 	private String descricao;
 

@@ -1,8 +1,8 @@
 package br.com.portovelho.sisupas.enums;
 
 public enum StatusAtendimento {
-	ABERTO("Aberto"), FINALIZADO("Finalizado"), FECHADO("Fechado"), EVASÃO("Evasão"), RECHAMADA("Rechamada"), NADA(
-			"Nada"), FINALIZADO_PELO_SISTEMA("Finalizado pelo sistema");
+	ABERTO("ABERTO"), FINALIZADO("FINALIZADO"), FECHADO("FECHADO"), EVASÃO("EVASÃO"), RECHAMADA("RECHAMADA"), NADA(
+			"NADA"), FINALIZADO_PELO_SISTEMA("FINALIZADO PELO SISTEMA");
 
 	private String descricao;
 

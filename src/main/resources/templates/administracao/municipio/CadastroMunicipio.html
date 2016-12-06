@@ -29,21 +29,21 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" upa:classforerror="nome">
-					<label for="nome">Nome*</label> <input id="nome" type="text"
+				<div class="form-group upa-required" upa:classforerror="nome">
+					<label for="nome" class="control-label">Nome</label> <input id="nome" type="text"
 						class="form-control" th:field="*{nome}" />
 				</div>
 				<div class="row">
 					<div class="col-sm-2">
-						<div class="form-group" upa:classforerror="codigoIbge">
-							<label for="codigoIbge">Código IBGE*</label> <input id="codigoIbge"
+						<div class="form-group upa-required" upa:classforerror="codigoIbge">
+							<label for="codigoIbge" class="control-label">Código IBGE</label> <input id="codigoIbge"
 								type="text" class="form-control" th:field="*{codigoIbge}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
-						<div class="form-group" upa:classforerror="uf">
-							<label for="uf">UF*</label> 
+						<div class="form-group upa-required" upa:classforerror="uf">
+							<label for="uf" class="control-label">UF</label> 
 							<select class="form-control" name="uf" th:field="*{uf}">
 								<option value="">Selecione a UF</option>
 								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"

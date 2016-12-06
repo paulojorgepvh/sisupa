@@ -26,21 +26,21 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" upa:classforerror="descricao">
-					<label for="descricao">Descrição*</label> <input id="descricao"	type="text" class="form-control" th:field="*{descricao}" />
+				<div class="form-group upa-required" upa:classforerror="descricao">
+					<label for="descricao" class="control-label">Descrição</label> <input id="descricao"	type="text" class="form-control" th:field="*{descricao}" />
 				</div>
 
 				<div class="row">
 					<div class="col-sm-2">
-						<div class="form-group" upa:classforerror="numero">
-							<label for="numero">Número*</label> 
+						<div class="form-group upa-required" upa:classforerror="numero">
+							<label for="numero" class="control-label">Número</label> 
 							<input id="numero" type="text" class="form-control" th:field="*{numero}" />
 						</div>
 					</div>
 
 					<div class="col-sm-4">
-						<div class="form-group" upa:classforerror="tipoSalaAtendimento">
-							<label for="tipoSalaAtendimento">Tipo de sala de atendimento</label> 
+						<div class="form-group upa-required" upa:classforerror="tipoSalaAtendimento">
+							<label for="tipoSalaAtendimento" class="control-label">Tipo de sala de atendimento</label> 
 								<select class="form-control" name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}">
 									<option value="">Selecione a sala de atendimento</option>
 									<option th:each="tipoSala : ${todosTiposSalas}" th:value="${tipoSala}" th:text="${tipoSala.descricao}"></option>
@@ -48,8 +48,8 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="form-group" upa:classforerror="statusSalaAtendimento">
-							<label for="statusSalaAtendimento">Status da Sala</label> 
+						<div class="form-group upa-required" upa:classforerror="statusSalaAtendimento">
+							<label for="statusSalaAtendimento" class="control-label">Status da Sala</label> 
 							<select class="form-control" name="statusSalaAtendimento" th:field="*{statusSalaAtendimento}">
 								<option th:each="statusSalaAtendimento : ${todosStatusSalaAtendimento}"
 									th:value="${statusSalaAtendimento}" th:text="${statusSalaAtendimento.descricao}">

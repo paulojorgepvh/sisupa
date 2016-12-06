@@ -7,20 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
-public class UF implements Serializable{
+public class UF implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long codigoIbge;
 	private String nome;
 	private String abreviacao;
-/*	@OneToMany(mappedBy = "uf")
-	private List<Municipio> municipios;*/
 
 	public String getNome() {
 		return nome;

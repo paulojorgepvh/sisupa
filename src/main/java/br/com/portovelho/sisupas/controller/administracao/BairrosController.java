@@ -1,11 +1,16 @@
 package br.com.portovelho.sisupas.controller.administracao;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,7 +57,7 @@ public class BairrosController {
 	public ModelAndView listaBairro(@ModelAttribute("filtro") BairroFiltro filtro,
 			@PageableDefault(size = 20) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView(BAIRRO_PESQUISA_VIEW);
-		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome());
+		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNomeAsc());
 
 		PageWrapper<Bairro> paginaWrapper = new PageWrapper<>(bairrosRepository.filtrar(filtro, pageable),
 				httpServletRequest);
@@ -63,11 +69,12 @@ public class BairrosController {
 	@RequestMapping("/novo")
 	public ModelAndView novoBairro(Bairro bairro) {
 		ModelAndView mv = new ModelAndView(BAIRRO_CAD_VIEW);
-		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome());
+		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNomeAsc());
 		return mv;
 	}
 
 	@PostMapping("/novo")
+	@CacheEvict(value = "bairros", key = "#bairro.municipio.id", condition = "#bairro.temMunicipio()")
 	public ModelAndView salvarBairro(@Valid Bairro bairro, BindingResult result, Model model, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novoBairro(bairro);
@@ -85,7 +92,7 @@ public class BairrosController {
 	@RequestMapping("/{id}")
 	public ModelAndView edicaoBairro(@PathVariable("id") Bairro bairro) {
 		ModelAndView mv = new ModelAndView(BAIRRO_CAD_VIEW);
-		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNome());
+		mv.addObject("todosUfs", ufsRepository.findAllByOrderByNomeAsc());
 		mv.addObject(bairro);
 		return mv;
 	}
@@ -93,5 +100,13 @@ public class BairrosController {
 	@RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
 	public @ResponseBody String mudaStatusBairro(@PathVariable Long id) {
 		return bairroService.mudarStatus(id);
+	}
+	
+	@Cacheable(value = "bairros", key = "#municipio")
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Bairro> pesquisarPorIdMunicipio(@RequestParam(name = "municipio", defaultValue = "-1") Long municipio) {
+		List<Bairro> findByMunicipioId = bairrosRepository.findByMunicipioIdAndStatusTrue(municipio);
+		
+		return findByMunicipioId;
 	}
 }

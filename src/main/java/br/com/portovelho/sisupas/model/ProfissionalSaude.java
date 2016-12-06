@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,6 +24,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import br.com.portovelho.sisupas.enums.PerfilDeAcesso;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "cpf", name = "unique_cpf"))
 public class ProfissionalSaude implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +41,7 @@ public class ProfissionalSaude implements Serializable{
 	private String cpf;
 
 	@NotBlank(message = "O campo Telefone é obrigatório!")
-	private String telefone;;
+	private String telefone;
 
 	private Boolean ativo;
 
@@ -56,6 +59,7 @@ public class ProfissionalSaude implements Serializable{
 	private String senha;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O campo Perfil de Acesso é obrigatório!")
 	private PerfilDeAcesso perfilDeAcesso;
 	
 	@PrePersist

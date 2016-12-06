@@ -1,5 +1,6 @@
 package br.com.portovelho.sisupas.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,7 @@ import br.com.portovelho.sisupas.repository.helper.motivoAtendimento.MotivosAten
 public interface MotivosAtendimentosRepository extends JpaRepository<MotivoAtendimento, Long>, MotivosAtendimentosRepositoryQueries {
     
 	public Optional<MotivoAtendimento> findByDescricaoIgnoreCase(String descricao);
+
+	public List<MotivoAtendimento> findAllByStatusTrueOrderByDescricaoAsc();
 
 }

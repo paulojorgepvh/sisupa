@@ -20,10 +20,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(uniqueConstraints={
-	    @UniqueConstraint(columnNames = {"nome","municipio_id"})
-	}) 
-public class Bairro implements Serializable{
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "nome", "municipio_id" }) })
+public class Bairro implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +39,7 @@ public class Bairro implements Serializable{
 	private Municipio municipio;
 
 	private Boolean status;
-	
+
 	@PrePersist
 	@PreUpdate
 	private void prePersistUpdate() {
@@ -78,6 +76,10 @@ public class Bairro implements Serializable{
 
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
+	}
+
+	public boolean temMunicipio() {
+		return municipio != null;
 	}
 
 	@Override

@@ -83,6 +83,10 @@ public class Municipio implements Serializable {
 	public Long getCodigoIbge() {
 		return codigoIbge;
 	}
+	
+	public boolean temUf(){
+		return uf != null;
+	}
 
 	@Override
 	public int hashCode() {

@@ -16,5 +16,8 @@ public interface CbosRepository extends JpaRepository<CBO, Long>, CbosRepository
 
 	public List<CBO> findByDescricaoContainingOrderByDescricaoAsc(String descricao);
 
-	public Optional<CBO> findByDescricaoIgnoreCaseAndCodigo(String descricao, Long codigo);
+	public Optional<CBO> findByDescricaoIgnoreCaseAndCodigo(String descricao, String codigo);
+
+	public List<CBO> findAllByStatusTrueOrderByDescricaoAsc();
+
 }

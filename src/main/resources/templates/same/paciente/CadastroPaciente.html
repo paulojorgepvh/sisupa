@@ -2,12 +2,13 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:upa="http://sisupas.portovelho.org.com.br"
+	layout:decorator="~{layout/LayoutPadrao}">
 
 <head>
 <title>UPA-24h</title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
 </head>
 
 <body>
@@ -21,153 +22,161 @@
 
 		<div class="container-fluid">
 
-			<div class="alert  alert-danger  alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<i class="fa  fa-exclamation-circle"></i> Já existe um produto com o
-				nome informado.
-			</div>
-
 			<form method="post" class="form-vertical  js-form-loading"
-				th:object="${paciente}">
+				th:action="@{/same/pacientes/novo}" th:object="${paciente}">
 
-				<div class="form-group">
-					<label for="nomeCompleto">Nome Completo*</label> <input
-						id="nomeCompleto" type="text" class="form-control"
-						th:field="*{nomeCompleto}" />
-				</div>
+				<upa:message/>
+
+				<input type="hidden" th:field="*{id}" />
+				
 				<div class="row">
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label for="cns">CNS</label> <input id="cns" type="text"
-								class="form-control" th:field="*{cns}" />
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label for="cpf">CPF</label> <input id="cpf" type="text"
-								class="form-control" th:field="*{cpf}" />
-						</div>
-					</div>
-
-					<div class="col-sm-3">
-						<div class="form-group ">
-							<label for="rg">RG</label> <input id="rg" type="text"
-								class="form-control" th:field="*{rg}" />
-						</div>
-					</div>
-
-
-					<div class="col-sm-3">
-						<div class="form-group ">
-							<label for="orgaoExpedidor">Orgão expedidor</label> <input
-								id="orgaoExpedidor" type="text" class="form-control"
-								th:field="*{orgaoExpedidor}" />
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="nomeDaMae">Nome da Mãe*</label> <input id="nomeDaMae"
-						type="text" class="form-control" th:field="*{nomeDaMae}" />
-				</div>
-
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="dataNascimento">Data de nascimento</label> <input
-								th:field="*{dataNascimento}" id="dataNascimento" type="text"
-								class="form-control" data-provide="datepicker"
-								data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
-								data-date-autoclose="true" data-date-today-highlight="true"
-								data-date-orientation="bottom" />
-						</div>
-					</div>
-					<div class="col-sm-1">
-						<div class="form-group">
-							<label for="idade">Idade</label>
-							<input id="idade" type="text" class="form-control"/>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="sexo">Sexo</label> <select class="form-control"
-								name="sexo" th:field="*{sexo}">
-								<option th:each="sexo : ${todosSexos}" th:value="${sexo}"
-									th:text="${sexo.descricao}"></option>
-							</select>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group ">
-							<label for="telefone">Telefone</label> <input
-								id="telefone" type="text" class="form-control"
-								th:field="*{endereco.telefone}" />
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-10">
-						<div class="form-group">
-							<label for="logradouro">Logradouro*</label> <input id="logradouro"
-								type="text" class="form-control"
-								th:field="*{endereco.logradouro}" />
-						</div>
-					</div>
-
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="numero">Número</label> <input id="numero" type="text"
-								class="form-control" th:field="*{endereco.numero}" />
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label for="estado">Estado</label> <select class="form-control"
-								name="estado" th:field="*{endereco.bairro.municipio.uf}">
-								<option th:each="uf : ${todasUfs}" th:value="${uf}"
-									th:text="${uf.nome}"></option>
-							</select>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="form-group">
-							<label for="municipio">Município</label> <input id="municipio"
-								type="text" class="form-control" />
-						</div>
-					</div>
-
 					<div class="col-sm-4">
-						<div class="form-group ">
-							<label for="bairro">Bairro</label> <input id="bairro" type="text"
-								class="form-control" />
+						<div class="form-group upa-required" upa:classforerror="nomeCompleto">
+							<label for="nomeCompleto" class="control-label">Nome completo</label> 
+							<input id="nomeCompleto" type="text" class="form-control" th:field="*{nomeCompleto}" autofocus="autofocus"/>
 						</div>
 					</div>
 					<div class="col-sm-2">
-						<div class="form-group ">
-							<label for="cep">CEP</label> <input id="cep" type="text"
-								class="form-control" th:field="*{endereco.cep}" />
+						<div class="form-group upa-required" upa:classforerror="cns">
+							<label for="cns" class="control-label">CNS</label> 
+							<input id="cns" type="text" class="form-control" th:field="*{cns}"/>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group upa-required" upa:classforerror="cpf">
+							<label for="cpf" class="control-label">CPF</label> 
+							<input id="cpf" type="text" class="form-control js-cpf" th:field="*{cpf}"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group upa-required" upa:classforerror="nomeDaMae">
+							<label for="nomeDaMae" class="control-label">Nome da mãe</label> 
+							<input id="nomeDaMae" type="text" class="form-control" th:field="*{nomeDaMae}"/>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group upa-required" upa:classforerror="rg">
+							<label for="rg" class="control-label">RG</label> 
+							<input id="rg" type="text" class="form-control" th:field="*{rg}"/>
+							
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group upa-required" upa:classforerror="orgaoExpedidor">
+							<label for="orgaoExpedidor" class="control-label">Orgao expedidor</label> 
+							<input id="orgaoExpedidor" type="text" class="form-control" th:field="*{orgaoExpedidor}"/>
 						</div>
 					</div>
 				</div>
 				<div class="row">
+					<div class="col-sm-2">
+						<div class="form-group upa-required" upa:classforerror="dataNascimento">
+							<label for="datepicker" class="control-label">Data de nascimento</label> 
+							<input id="datepicker" type="text" class="form-control js-date" autocomplete="off" th:field="*{dataNascimento}"/>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group upa-required" upa:classforerror="sexo">
+							<label for="sexo" class="control-label">Sexo</label> 
+							<div style="margin-top: 7px;">
+								<th:block th:each="sexo : ${todosSexos}">
+									<div class="radio  radio-inline">
+										<input type="radio" th:field="*{sexo}" th:id="${sexo.descricao}" th:value="${sexo}"> 
+										<label class="control-label" th:for="${sexo.descricao}" th:text="${sexo.descricao}"></label>
+									</div>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group upa-required" upa:classforerror="endereco.logradouro">
+							<label th:for="logradouro" class="control-label">Logradouro</label> 
+							<input th:id="logradouro" type="text" class="form-control" th:field="*{endereco.logradouro}"/>
+						</div>
+					</div>
 					
+					<div class="col-sm-1">
+						<div class="form-group" upa:classforerror="endereco.numero">
+							<label for="numero">Número</label> 
+							<input id="numero" type="text" class="form-control" th:field="*{endereco.numero}"/>
+						</div>
+					</div>
+					
+					<div class="col-sm-2">
+						<div class="form-group" upa:classforerror="endereco.cep">
+							<label for="cep">CEP</label> 
+							<input id="cep" type="text" class="form-control js-cep" th:field="*{endereco.cep}"/>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group upa-required">
+							<label for="uf" class="control-label">UF</label> 
+							<select class="form-control" id="uf" name="uf">
+								<option value="">Selecione um estado</option>
+								<option th:each="uf : ${todasUfs}" th:value="${uf.id}" th:text="${uf.nome}"></option>
+							</select>
+						</div>
+					</div>
+	
+					<div class="col-sm-3">
+						<div class="form-group upa-required">
+							<label for="municipio" class="control-label">Município</label> 
+							<div class="upa-field-action">
+								<select id="municipio" class="form-control" name="municipio" data:url="@{/administracao/municipios}">
+								</select>
+								<div class="upa-field-action__icon js-img-loading" style="display: none">
+									<img th:src="@{/layout/images/mini-loading.gif}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group upa-required" upa:classforerror="endereco.bairro">
+							<label for="bairro" class="control-label">Bairro</label> 
+							<div class="upa-field-action">
+								<select id="bairro" class="form-control" name="bairro" th:field="*{endereco.bairro}" data:url="@{/administracao/bairros}">
+								</select>
+								<div class="upa-field-action__icon js-img-loading" style="display: none">
+									<img th:src="@{/layout/images/mini-loading.gif}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group upa-required" upa:classforerror="endereco.telefone">
+							<label for="telefone" class="control-label">Telefone</label> 
+							<input id="telefone" type="text" class="form-control js-phone-number" th:field="*{endereco.telefone}" />
+						</div>
+					</div>
 				</div>
 
-
-
 				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
-					<a th:href="@{/same/paciente/}" class="btn  btn-default">Cancelar</a>
+					<button class="btn  btn-success" type="submit">Salvar</button>
+					<a th:href="@{/same/pacientes/}" class="btn  btn-danger">Cancelar</a>
 				</div>
 			</form>
 		</div>
 
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/layout/javascripts/jquery.mask.min.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraTelefone.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraCpf.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraCep.js}"></script>
+		<script th:src="@{/layout/javascripts/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/layout/javascripts/bootstrap-datepicker.pt-BR.min.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraData.js}"></script>
+		<script th:src="@{/layout/javascripts/combo-estado-cidade-bairro.js}"></script>
+	</th:block>
 
 </body>
 </html>

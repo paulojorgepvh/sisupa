@@ -2,8 +2,8 @@ package br.com.portovelho.sisupas.enums;
 
 public enum Raca {
 
-	BRANCA("Branco"), PRETA("Negro"), PARDA("Pardo"), AMARELA("Amarela"), INDÍGINA("Indígina"), DESCONHECIDA(
-			"Desconhecida");
+	BRANCO("BRANCO"), NEGRO("NEGRO"), PARDO("PARDO"), AMARELA("AMARELO"), INDÍGINA("INDÍGINA"), DESCONHECIDA(
+			"DESCONHECIDA");
 
 	private String descricao;
 

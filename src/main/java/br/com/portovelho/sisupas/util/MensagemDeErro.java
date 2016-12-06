@@ -1,23 +1,17 @@
 package br.com.portovelho.sisupas.util;
 
-public class MensagemDeErro {
-	private String mensagem;
-	private Boolean erro;
+import org.springframework.stereotype.Service;
 
-	public String getMensagem() {
-		return mensagem;
+@Service
+public class MensagemDeErro extends Mensagem{
+
+	private String propriedade;
+	
+	public String getPropriedade() {
+		return propriedade;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
+	public void setPropriedade(String propriedade) {
+		this.propriedade = propriedade;
 	}
-
-	public Boolean getErro() {
-		return erro;
-	}
-
-	public void setErro(Boolean erro) {
-		this.erro = erro;
-	}
-
 }

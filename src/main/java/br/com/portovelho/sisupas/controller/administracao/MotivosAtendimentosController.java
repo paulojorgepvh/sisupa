@@ -45,7 +45,7 @@ public class MotivosAtendimentosController {
 
 	@GetMapping
 	public ModelAndView listaMotivosAtendimento(@ModelAttribute("filtro") MotivoAtendimentoFiltro filtro,
-			@PageableDefault(size = 20) Pageable pageable, HttpServletRequest httpServletRequest) {
+			@PageableDefault(size = 4) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView(MOTIVO_ATEND_PESQUISA_VIEW);
 
 		PageWrapper<MotivoAtendimento> paginaWrapper = new PageWrapper<>(motivosAtendimentosRepository.filtrar(filtro, pageable),

@@ -95,10 +95,10 @@
 							<td class="text-center" th:text="${salaAtendimento.numero}"></td>
 							<td class="text-center" th:text="${salaAtendimento.tipoSalaAtendimento.descricao}"></td>
 							<td class="text-center" th:switch="${salaAtendimento.statusSalaAtendimento.descricao}">
-								<span th:case="'Aberta'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-success"></span>
-								<span th:case="'Em Manutenção'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-warning"></span>
-								<span th:case="'Inativa'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-danger"></span>
-								<span th:case="'Ocupada'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-info"></span>  
+								<span th:case="'ABERTA'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-success"></span>
+								<span th:case="'EM MANUTENÇÃO'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-warning"></span>
+								<span th:case="'INATIVA'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-danger"></span>
+								<span th:case="'OCUPADA'" th:text="${salaAtendimento.statusSalaAtendimento.descricao}" class="label label-info"></span>  
 							</td>
 						</tr>
 						<tr th:if="${pagina.vazia}">

@@ -46,3 +46,6 @@
 .upa-field-action__icon {
 	margin: 6px 0 0 5px;
 }
+.upa-required > .control-label:after {
+	content: "*";
+}

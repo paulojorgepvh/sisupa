@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+	<body>
+		<div class="modal fade" id="modalDetalhesAtendimentoNaoIdentificado" tabindex="-1" role="dialog" th:fragment="modal (atendimentoNaoIdentificado)">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header" style="background: #1e94d2">
+		        <button type="button" style="color: white; font-weight: bold;" class="close" data-dismiss="modal">
+		        	<span aria-hidden="true">&times;</span>
+		        </button>
+		        <h4 class="modal-title" style="color: white;"  id="myModalLabel">Detalhes - Atendimento Não Identificado</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  					<div class="panel panel-success">
+    					<div class="panel-heading" role="tab" id="headingOne">
+      						<h4 class="panel-title">
+        						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          							Identificação
+        						</a>
+      						</h4>
+    					</div>
+    					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      						<div class="panel-body">
+      							<div class="row">
+									<div class="col-sm-2">
+        								<div class="panel-group">
+        									<label for="estruturaCorporal">Estrutura corporal:</label>
+        									<span th:text="${atendimentoNaoIdentificado.estrutura.descricao}"></span> 
+        								</div>
+        						</div>
+      						</div>
+    					</div>
+  					</div>
+  					<div class="panel panel-success">
+    					<div class="panel-heading" role="tab" id="headingTwo">
+      						<h4 class="panel-title">
+       							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          							Dados do atendimento
+        						</a>
+      						</h4>
+    					</div>
+    					<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      						<div class="panel-body">
+        						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      						</div>
+    					</div>
+  					</div>
+  				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-success">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</body>
+</html>

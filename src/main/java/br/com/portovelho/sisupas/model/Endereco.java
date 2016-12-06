@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,11 +26,23 @@ public class Endereco implements Serializable{
 	private String logradouro;
 	
 	private String numero;
+	
 	private String cep;
+	
+	@NotBlank(message="O campo Telefone é obrigatório!")
 	private String telefone;
+	
 	@OneToOne
+	@NotNull(message="O campo Bairro é obrigatório!")
 	private Bairro bairro;
 
+	@PrePersist
+	@PreUpdate
+	private void prePersistUpdate() {
+		logradouro = logradouro.toUpperCase().trim();
+		numero = numero.trim();
+	}
+	
 	public String getLogradouro() {
 		return logradouro;
 	}

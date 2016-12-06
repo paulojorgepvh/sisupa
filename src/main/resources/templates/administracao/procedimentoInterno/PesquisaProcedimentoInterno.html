@@ -74,7 +74,9 @@
 							<td>
 								<a th:href="@{/administracao/procedimentosInternos/{id}(id=${procedimento.id})}" th:text="${procedimento.descricao}"></a>
 							</td>
-							<td class="text-center" th:text="${procedimento.tipoSalaAtendimento.descricao}"></td>
+							<td class="text-center">
+								<span style="display: block;" th:each="tipoSala : ${procedimento.tipoSalaAtendimento}" th:text="${tipoSala.descricao}"></span>
+							</td>
 							<td class="table-pesq-produto-col-estoque">
 								<a class="js-atualizar-status" th:attr="data-id=${procedimento.id}" th:href="@{/administracao/procedimentosInternos/{id}/status(id=${procedimento.id})}">
 									<span class="tamanho-icone-ativo" th:attr="data-role=${procedimento.id}" th:classappend="${procedimento.status ? 'glyphicon glyphicon-ok-sign text-success' : 'glyphicon glyphicon-remove-sign text-danger'}"></span>

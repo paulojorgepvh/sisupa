@@ -2,12 +2,14 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	layout:decorator="~{layout/LayoutPadrao}"
+	xmlns:upa="http://sisupas.portovelho.org.com.br">
 
 <head>
-<title>UPA-24h</title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+	<title>UPA-24h</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/prism.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/chosen.css}">
 </head>
 
 <body>
@@ -21,86 +23,96 @@
 
 		<div class="container-fluid">
 
-			<form method="post" class="form-vertical  js-form-loading"
-				th:action="@{/administracao/profissionalSaude/novo}"
+			<form method="post" class="form-vertical  js-form-loading" th:action="@{/administracao/profissionaisSaude/novo}"
 				th:object="${profissionalSaude}" >
 
-				<div layout:include="mensagens/MensagemGeral"></div>
-				<div layout:include="mensagens/MensagemErroValidacao"></div>
+				<upa:message/>
 
 				<input type="hidden" th:field="*{id}" />
 				<input type="hidden" th:field="*{ativo}" />
 				
-				<div class="form-group" th:classappend="${#fields.hasErrors('nomeCompleto')} ? 'has-error'">
-					<label for="nomeCompleto">Nome Completo</label> <input
-						id="nomeCompleto" type="text" class="form-control"
-						th:field="*{nomeCompleto}" />
+				<div class="form-group upa-required" upa:classforerror="nomeCompleto">
+					<label for="nomeCompleto" class="control-label">Nome Completo</label> 
+					<input id="nomeCompleto" type="text" class="form-control" th:field="*{nomeCompleto}" autofocus="autofocus" />
 				</div>
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('cpf')} ? 'has-error'">
-							<label for="cpf">CPF</label> <input id="cpf" type="text"
-								class="form-control" th:field="*{cpf}" />
+						<div class="form-group upa-required" upa:classforerror="cpf">
+							<label for="cpf" class="control-label">CPF</label> 
+							<input id="cpf" type="text" class="form-control js-cpf" th:field="*{cpf}" />
 						</div>
 					</div>
 
 					<div class="col-sm-3">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('telefone')} ? 'has-error'">
-							<label for="telefone">Telefone</label> <input id="telefone"
-								type="text" class="form-control" th:field="*{telefone}" />
+						<div class="form-group upa-required" upa:classforerror="telefone">
+							<label for="telefone" class="control-label">Telefone</label> 
+							<input id="telefone" type="text" class="form-control js-phone-number" th:field="*{telefone}" />
 						</div>
 					</div>
 
 					<div class="col-sm-4">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('cbos')} ? 'has-error'">
-							<label for="cbo">CBO</label> <select class="form-control"
-								name="cbo" th:field="*{cbos}">
-								<option th:each="cbo : ${todosCbos}" th:value="${cbo.codigo}"
-									th:text="${cbo.descricao}"></option>
+						<div class="form-group upa-required" upa:classforerror="cbos">
+							<label for="cbo" class="control-label">CBO</label> 
+							<select class="form-control chosen-select" multiple style="width:350px;" tabindex="4"
+									 name="cbo" th:field="*{cbos}" data-placeholder="Selecione o CBO">
+								<option th:each="cbo : ${todosCbos}" th:value="${cbo.codigo}" th:text="${cbo.descricao}"></option>
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('login')} ? 'has-error'">
-							<label for="login">Login</label> <input id="login" type="text"
-								class="form-control" th:field="*{login}" />
+						<div class="form-group" upa:classforerror="login">
+							<label for="login" class="control-label">Login</label> 
+							<input id="login" type="text" class="form-control" th:field="*{login}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('senha')} ? 'has-error'">
-							<label for="senha">Senha</label> <input id="senha" type="password"
-								class="form-control" th:field="*{senha}" />
+						<div class="form-group" upa:classforerror="senha">
+							<label for="senha" class="control-label">Senha</label> 
+							<input id="senha" type="password" class="form-control" th:field="*{senha}" />
 						</div>
 					</div>
 					
 					<div class="col-sm-4">
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('perfilDeAcesso')} ? 'has-error'">
-							<label for="perfilDeAcesso">Perfil de acesso</label> 
+						<div class="form-group upa-required" upa:classforerror="perfilDeAcesso">
+							<label for="perfilDeAcesso" class="control-label">Perfil de acesso</label> 
 							<select class="form-control" name="perfilDeAcesso" th:field="*{perfilDeAcesso}">
-								<option th:each="perfilDeAcesso : ${todosPerfisDeAcesso}" th:value="${perfilDeAcesso}"
-									th:text="${perfilDeAcesso.descricao}"></option>
+								<option value="">Selecione o perfil de acesso</option>
+								<option th:each="perfilDeAcesso : ${todosPerfisDeAcesso}" th:value="${perfilDeAcesso}" th:text="${perfilDeAcesso.descricao}"></option>
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<button class="btn  btn-primary" type="submit">Salvar</button>
-					<a th:href="@{/administracao/profissionalSaude/}"
-						class="btn  btn-default">Cancelar</a>
+					<button class="btn  btn-success" type="submit">Salvar</button>
+					<a th:href="@{/administracao/profissionaisSaude/}" class="btn  btn-danger">Cancelar</a>
 				</div>
 			</form>
 		</div>
 
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/layout/javascripts/jquery.mask.min.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraTelefone.js}"></script>
+		<script th:src="@{/layout/javascripts/MascaraCpf.js}"></script>
+		<script th:src="@{/layout/javascripts/chosen.jquery.js}"></script>
+		<script th:src="@{/layout/javascripts/prism.js}"></script>
+		
+		<script type="text/javascript">
+		    var config = {
+		      '.chosen-select'           : {},
+		      '.chosen-select-deselect'  : {allow_single_deselect:true},
+		      '.chosen-select-no-single' : {disable_search_threshold:10},
+		      '.chosen-select-no-results': {no_results_text:'Oops, não econtrado!'},
+		      '.chosen-select-width'     : {width:"95%"}
+		    }
+		    for (var selector in config) {
+		      $(selector).chosen(config[selector]);
+		    }
+  		</script>
+	</th:block>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 package br.com.portovelho.sisupas.service;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.portovelho.sisupas.model.ProfissionalSaude;
@@ -24,7 +26,11 @@ public class ProfissionalSaudeService {
 	}*/
 
 	public void salvar(ProfissionalSaude profissionalSaude) {
-		profissionaisSaudeRepository.save(profissionalSaude);
+		try {
+			profissionaisSaudeRepository.save(profissionalSaude);
+		} catch (DataIntegrityViolationException e) {
+			throw (ConstraintViolationException) e.getCause();
+		}
 	}
 
 	public String mudarStatus(Long id) {

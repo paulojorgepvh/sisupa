@@ -7,6 +7,10 @@
 
 <head>
 <title>UPA-24h</title>
+
+  <!-- <link rel="stylesheet" th:href="@{/layout/stylesheets/styleDropdown.css}"> -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/prism.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/chosen.css}">
 </head>
 
 <body>
@@ -26,24 +30,25 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" upa:classforerror="descricao">
-					<label for="descricao">Descrição*</label> 
+				<div class="form-group upa-required" upa:classforerror="descricao">
+					<label for="descricao" class="control-label">Descrição</label> 
 					<input id="descricao" type="text" class="form-control" th:field="*{descricao}" />
 				</div>
 
 				<div class="row">
 					<div class="col-sm-2">
-						<div class="form-group" upa:classforerror="codigo">
-							<label for="codigo">Código*</label> 
+						<div class="form-group upa-required" upa:classforerror="codigo">
+							<label for="codigo" class="control-label">Código</label> 
 							<input id="codigo" type="text" class="form-control" th:field="*{codigo}" />
 						</div>
 					</div>
 
 					<div class="col-sm-4">
-						<div class="form-group" upa:classforerror="tipoSalaAtendimento">
-							<label for="tipoSalaAtendimento">Tipo de sala de atendimento</label> 
-							<select class="form-control" name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}">
-								<option value="">Selecione a sala de atendimento</option>
+						<div class="form-group upa-required" upa:classforerror="tipoSalaAtendimento">
+							<label for="tipoSalaAtendimento" class="control-label">Tipo de sala de atendimento</label> 
+							<select class="form-control chosen-select" multiple style="width:350px;" tabindex="4" 
+									name="tipoSalaAtendimento" th:field="*{tipoSalaAtendimento}" data-placeholder="Selecione a sala de atendimento">
+								<!-- <option value="">Selecione a sala de atendimento</option> -->
 								<option th:each="tipoSala : ${todosTiposSalas}" th:value="${tipoSala}" th:text="${tipoSala.descricao}"></option>
 							</select>
 						</div>
@@ -59,6 +64,24 @@
 		</div>
 
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/layout/javascripts/chosen.jquery.js}"></script>
+		<script th:src="@{/layout/javascripts/prism.js}"></script>
+		
+		<script type="text/javascript">
+		    var config = {
+		      '.chosen-select'           : {},
+		      '.chosen-select-deselect'  : {allow_single_deselect:true},
+		      '.chosen-select-no-single' : {disable_search_threshold:10},
+		      '.chosen-select-no-results': {no_results_text:'Oops, não econtrado!'},
+		      '.chosen-select-width'     : {width:"95%"}
+		    }
+		    for (var selector in config) {
+		      $(selector).chosen(config[selector]);
+		    }
+  		</script>
+	</th:block>
+	
 
 </body>
 </html>

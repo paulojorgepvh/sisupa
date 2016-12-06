@@ -1,8 +1,9 @@
 package br.com.portovelho.sisupas.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,6 +22,7 @@ import br.com.portovelho.sisupas.enums.TipoSalaAtendimento;
 
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "codigo", name = "unique_codigo"), @UniqueConstraint(columnNames = "descricao", name = "unique_descricao") })
 public class ProcedimentoInterno implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -27,19 +31,16 @@ public class ProcedimentoInterno implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	MUDAR O NOME DA CONSTRAINT NO BANCO DE DADOS PARA: unique_codigo
 	@NotBlank(message = "O campo Código é obrigatório!")
-	@Column(unique=true)
 	private String codigo;
 
-//	MUDAR O NOME DA CONSTRAINT NO BANCO DE DADOS PARA: unique_descricao
 	@NotBlank(message = "O campo Descrição é obrigatório!")
-	@Column(unique=true)
 	private String descricao;
 
+	@ElementCollection(targetClass = TipoSalaAtendimento.class)
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O campo Tipo de Sala é obrigatório!")
-	private TipoSalaAtendimento tipoSalaAtendimento;
+	private List<TipoSalaAtendimento> tipoSalaAtendimento;
 
 	private Boolean status;
 
@@ -73,11 +74,11 @@ public class ProcedimentoInterno implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public TipoSalaAtendimento getTipoSalaAtendimento() {
+	public List<TipoSalaAtendimento> getTipoSalaAtendimento() {
 		return tipoSalaAtendimento;
 	}
 
-	public void setTipoSalaAtendimento(TipoSalaAtendimento tipoSalaAtendimento) {
+	public void setTipoSalaAtendimento(List<TipoSalaAtendimento> tipoSalaAtendimento) {
 		this.tipoSalaAtendimento = tipoSalaAtendimento;
 	}
 

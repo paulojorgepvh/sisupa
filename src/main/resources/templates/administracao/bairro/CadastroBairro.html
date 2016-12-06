@@ -30,24 +30,23 @@
 
 				<input type="hidden" th:field="*{id}" />
 
-				<div class="form-group" upa:classforerror="nome">
-					<label for="nome">Nome*</label> 
+				<div class="form-group upa-required" upa:classforerror="nome">
+					<label for="nome" class="control-label">Nome</label> 
 					<input id="nome" type="text" class="form-control" th:field="*{nome}" />
 				</div>
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="form-group">
-							<label for="uf">UF*</label> 
+						<div class="form-group upa-required">
+							<label for="uf" class="control-label">UF</label> 
 							<select id="uf" class="form-control" name="uf">
 								<option value="">Selecione a UF</option>
-								<option th:each="uf : ${todosUfs}" th:value="${uf.id}"
-									th:text="${uf.nome}"></option>
+								<option th:each="uf : ${todosUfs}" th:value="${uf.id}" th:text="${uf.nome}"></option>
 							</select>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
-							<label for="municipio">Município*</label> 
+						<div class="form-group upa-required">
+							<label for="municipio" class="control-label">Município</label> 
 							<div class="upa-field-action">
 								<select id="municipio" class="form-control" name="municipio" th:field="*{municipio}" data:url="@{/administracao/municipios}">
 								</select>
